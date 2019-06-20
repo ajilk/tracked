@@ -68,7 +68,7 @@ class tracked extends StatelessWidget {
     );
 
     final drawer = Container(
-      padding: EdgeInsets.fromLTRB(10, 30, 0, 0),
+      padding: EdgeInsets.fromLTRB(10, 30, 0, 10),
       color: Theme.of(context).primaryColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -115,26 +115,49 @@ class tracked extends StatelessWidget {
                 onPressed: () => Scaffold.of(context).openDrawer(),
               ),
         ),
+        actions: [
+          Builder(
+            builder: (context) => IconButton(
+                  icon: new Icon(Icons.dehaze,
+                      color: Theme.of(context).buttonColor),
+                  onPressed: () => Scaffold.of(context).openEndDrawer(),
+                ),
+          ),
+        ],
       ),
-      drawer: Drawer(child: drawer),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 60.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                logo,
-                SizedBox(height: 30.0),
-                searchField,
-                SizedBox(height: 20.0),
-                searchButton,
-                SizedBox(height: 100.0),
-              ],
+      drawer: SizedBox(width: 200, child: Drawer(child: drawer)),
+      endDrawer: SizedBox(width: 200, child: Drawer(child: drawer)),
+      body: Stack(
+        children: [
+          Builder(
+            builder: (context) =>
+                GestureDetector(onHorizontalDragEnd: (details) {
+                  if (details.primaryVelocity > 0)
+                    Scaffold.of(context).openDrawer();
+                  else if (details.primaryVelocity < 0)
+                    Scaffold.of(context).openEndDrawer();
+                }),
+          ),
+          Center(
+            child: Container(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 60.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    logo,
+                    SizedBox(height: 30.0),
+                    searchField,
+                    SizedBox(height: 20.0),
+                    searchButton,
+                    SizedBox(height: 100.0),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
