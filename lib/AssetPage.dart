@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'Field.dart';
+import 'Menu.dart';
 
 class AssetPage extends StatelessWidget {
   static const routeName = '/assetPage';
@@ -23,54 +25,60 @@ class AssetPage extends StatelessWidget {
       elevation: 2.0,
       borderRadius: BorderRadius.circular(10.0),
       child: MaterialButton(
-        onPressed: () => print('pressed [Edit]'),
-        // minWidth: MediaQuery.of(context).size.width, // matches parent width
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        child: Text(
-          'Edit',
-          textAlign: TextAlign.left,
-          style:
-              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
+          onPressed: () => print('pressed [Edit]'),
+          minWidth: MediaQuery.of(context).size.width, // matches parent width
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          child: Text(
+            'Edit',
+            textAlign: TextAlign.left,
+            style: style.copyWith(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          )),
     );
-
-    final homeButton = Material(
-      color: Color.fromRGBO(51, 153, 255, 1.0), // have MaterialApp track this
-      elevation: 2.0,
-      borderRadius: BorderRadius.circular(10.0),
-      child: MaterialButton(
-        onPressed: () => Navigator.pop(context),
-        // minWidth: MediaQuery.of(context).size.width, // matches parent width
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        child: Text(
-          'Home',
-          textAlign: TextAlign.left,
-          style:
-              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(30.0),
-          child: ListView(
-            children: [
-              field,
-              SizedBox(height: 20.0),
-              field,
-              SizedBox(height: 20.0),
-              field,
-              SizedBox(height: 20.0),
-              field,
-              SizedBox(height: 20.0),
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround,  children: [homeButton, editButton]),
-            ],
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 0.0),
+            child: ListView(
+              children: [
+                Field(text: 'Asset Tag'),
+                Field(text: 'Serial Number'),
+                Field(text: 'Location', keyboardType: TextInputType.number),
+                Field(
+                  text: 'Description',
+                  keyboardType: TextInputType.multiline,
+                ),
+                SizedBox(height: 24.0),
+                editButton,
+              ],
+            ),
           ),
-        ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  onVerticalDragEnd: (details) =>
+                      details.primaryVelocity > 0 ? openMenu(context) : null,
+                  onTap: () => openMenu(context),
+                  child: Container(
+                    child: Center(child: Icon(Icons.drag_handle, color: Colors.blue,)),
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

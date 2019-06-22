@@ -7,7 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'AssetPage.dart'; 
+import 'AssetPage.dart';
+import 'Menu.dart';
 
 class FadeRoute<T> extends MaterialPageRoute<T> {
   FadeRoute({WidgetBuilder builder, RouteSettings settings})
@@ -68,7 +69,6 @@ class tracked extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logo = Text('tracked', style: style.copyWith(fontSize: 40));
-
     final searchField = TextField(
       // style: style,
       decoration: InputDecoration(
@@ -105,21 +105,46 @@ class tracked extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
+      // floatingActionButton: new FloatingActionButton(
+      // onPressed: () => _settingModalBottomSheet(context)),
       body: Stack(
         children: [
-          Builder(
-            builder: (context) =>
-                GestureDetector(onHorizontalDragEnd: (details) {
-                  if (details.primaryVelocity > 0)
-                    Scaffold.of(context).openDrawer();
-                  else if (details.primaryVelocity < 0)
-                    Scaffold.of(context).openEndDrawer();
-                }),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Builder(
+              builder: (context) {
+                return GestureDetector(
+                  onVerticalDragEnd: (details) =>
+                      details.primaryVelocity > 0 ? openMenu(context) : null,
+                  onTap: () => openMenu(context),
+                  child: Container(
+                    child: Center(
+                      child: Icon(Icons.drag_handle, color: Colors.blue),
+                    ),
+                    height: 40.0,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
+          // Builder(
+          //   builder: (context) => GestureDetector(onVerticalDragEnd: (details) {
+          //         if (details.primaryVelocity > 0) openMenu(context);
+          //         // else if (details.primaryVelocity < 0)
+          //         //   Scaffold.of(context).openEndDrawer();
+          //       }),
+          // ),
           Center(
             child: Container(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 60.0),
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
