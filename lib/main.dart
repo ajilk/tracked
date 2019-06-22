@@ -1,14 +1,37 @@
 /* TODO: Dynamic Theme Selection */
 /* BUG: InkWell Effect on Drawer elements not working */
+/* IDEA: Custom Widget with Types (type: Enum)
+          e.g.  Image with short descriptions [ CustomImage(Type.short, src) ]
+                Image with long descriptions [ CustomImage(Type.long, src) ]
+*/
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'AssetPage.dart'; 
+
+class FadeRoute<T> extends MaterialPageRoute<T> {
+  FadeRoute({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  // Widget build(context, animation, secondaryAnimation, child) {}
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) return child;
+    // If you don't want any animation -> return child
+    // return child;
+    return new FadeTransition(opacity: animation, child: child);
+  }
+}
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (_) {
       runApp(
         new MaterialApp(
+          debugShowCheckedModeBanner: false,
+          // theme: ThemeData(),
+          // theme: ThemeData.dark(),
           theme: ThemeData(
             brightness: Brightness.dark,
             hintColor: Colors.grey.shade500,
@@ -17,10 +40,20 @@ void main() {
             accentColor: Color.fromRGBO(51, 153, 255, 1.0),
             buttonColor: Color.fromRGBO(51, 153, 255, 1.0),
           ),
+
           home: tracked(),
-          // theme: ThemeData(),
-          // theme: ThemeData.dark(),
-          debugShowCheckedModeBanner: false,
+          // initialRoute: tracked.routeName,
+          onGenerateRoute: (settings) {
+            switch (settings.name) {
+              case tracked.routeName:
+                return FadeRoute(builder: (context) => new tracked());
+                break;
+              case AssetPage.routeName:
+                // FadeRoute(builder: (context) => new AssetPage());
+                return FadeRoute(builder: (context) => new AssetPage());
+                break;
+            }
+          },
         ),
       );
     },
@@ -28,6 +61,8 @@ void main() {
 }
 
 class tracked extends StatelessWidget {
+  static const routeName = '/';
+
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   @override
@@ -56,7 +91,8 @@ class tracked extends StatelessWidget {
       elevation: 2.0,
       borderRadius: BorderRadius.circular(10.0),
       child: MaterialButton(
-          onPressed: () => print('pressed [Search]'),
+          // onPressed: () => print('pressed [Search]'),
+          onPressed: () => Navigator.pushNamed(context, AssetPage.routeName),
           minWidth: MediaQuery.of(context).size.width, // matches parent width
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           child: Text(
@@ -67,66 +103,8 @@ class tracked extends StatelessWidget {
           )),
     );
 
-    final drawer = Container(
-      padding: EdgeInsets.fromLTRB(10, 30, 0, 10),
-      color: Theme.of(context).primaryColor,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                leading: Icon(Icons.arrow_back,
-                    color: Theme.of(context).buttonColor),
-                onTap: () => Navigator.pop(context),
-              ),
-              ListTile(
-                  title: Text('Export', style: style),
-                  trailing: Icon(Icons.vertical_align_top,
-                      color: Theme.of(context).buttonColor),
-                  onTap: () => print('tapped [export]')),
-              ListTile(
-                  title: Text('Import', style: style),
-                  trailing: Icon(Icons.vertical_align_bottom,
-                      color: Theme.of(context).buttonColor),
-                  onTap: () => print('tapped [import]')),
-            ],
-          ),
-          ListTile(
-              title: Text('Settings', style: style),
-              trailing:
-                  Icon(Icons.settings, color: Theme.of(context).buttonColor),
-              onTap: () => print('tapped [settings]')),
-        ],
-      ),
-    );
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        leading: Builder(
-          builder: (context) => IconButton(
-                icon: new Icon(Icons.dehaze,
-                    color: Theme.of(context).buttonColor),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
-        ),
-        actions: [
-          Builder(
-            builder: (context) => IconButton(
-                  icon: new Icon(Icons.dehaze,
-                      color: Theme.of(context).buttonColor),
-                  onPressed: () => Scaffold.of(context).openEndDrawer(),
-                ),
-          ),
-        ],
-      ),
-      drawer: SizedBox(width: 200, child: Drawer(child: drawer)),
-      endDrawer: SizedBox(width: 200, child: Drawer(child: drawer)),
       body: Stack(
         children: [
           Builder(
@@ -151,7 +129,7 @@ class tracked extends StatelessWidget {
                     searchField,
                     SizedBox(height: 20.0),
                     searchButton,
-                    SizedBox(height: 100.0),
+                    // SizedBox(height: 100.0),
                   ],
                 ),
               ),
