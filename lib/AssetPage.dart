@@ -55,29 +55,6 @@ class AssetPage extends StatelessWidget {
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Builder(
-              builder: (context) {
-                return GestureDetector(
-                  onVerticalDragEnd: (details) =>
-                      details.primaryVelocity > 0 ? openMenu(context) : null,
-                  onTap: () => openMenu(context),
-                  child: Container(
-                    child: Center(child: Icon(Icons.drag_handle, color: Colors.blue,)),
-                    height: 40.0,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10.0),
-                        topRight: Radius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
         ],
       ),
     );
