@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "357592640583",
+    "firebase_url": "https://tracked-20e3a.firebaseio.com",
+    "project_id": "tracked-20e3a",
+    "storage_bucket": "tracked-20e3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357592640583:android:c06bfa9d271e092c",
+        "android_client_info": {
+          "package_name": "com.example.tracked"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357592640583-1nn0jofcaq5dcqilt1mk35g3cesse2pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQL120rPHhpV4m2oo6_VyP3yeesZijKV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357592640583-1nn0jofcaq5dcqilt1mk35g3cesse2pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

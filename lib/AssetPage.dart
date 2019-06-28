@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'Field.dart';
-import 'Menu.dart';
 
 class AssetPage extends StatelessWidget {
   static const routeName = '/assetPage';
