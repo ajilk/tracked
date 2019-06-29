@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'AssetPage.dart';
 import 'SigninPage.dart';
 import 'Tracked.dart';
-// import 'dart:math' as math;
 
 class FadeRoute<T> extends MaterialPageRoute<T> {
   FadeRoute({WidgetBuilder builder, RouteSettings settings})

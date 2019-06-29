@@ -32,6 +32,8 @@ class SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     RegExp validEmail = new RegExp(r'^.+\@gmail.com$');
 
+    final logo = Text('tracked', style: TextStyle(fontSize: 40));
+
     final emailField = TextFormField(
       validator: (input) => input.length < 6 || !validEmail.hasMatch(input)
           ? "Invalid Email"
@@ -80,6 +82,7 @@ class SigninPageState extends State<SigninPage> {
     );
 
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -89,7 +92,7 @@ class SigninPageState extends State<SigninPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text("Sign In", style: TextStyle(fontSize: 25.0)),
+                logo,
                 SizedBox(height: 40.0),
                 emailField,
                 SizedBox(height: 20.0),
