@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'AssetPage.dart';
 
 class Tracked extends StatefulWidget {
   static const routeName = '/tracked';
@@ -31,12 +32,17 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
 
     final searchField = TextField(
       // style: style,
+      onSubmitted: (input) {
+        print(input);
+        Navigator.pushNamed(context, AssetPage.routeName);
+      },
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(16.0),
+        contentPadding: EdgeInsets.all(15.0),
         hintText: '[DOE] or [S/N]',
         border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: Theme.of(context).primaryColor)),
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+        ),
       ),
     );
 
@@ -48,13 +54,13 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: new List.generate(icons.length, (int index) {
           Widget child = new Container(
-            decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
+            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
             height: 40.0,
-            alignment: FractionalOffset.topCenter,
+            alignment: FractionalOffset.center,
             child: new ScaleTransition(
               scale: new CurvedAnimation(
                 parent: _controller,
-                // 0.0 - 0.5 = duration
+                // 0.0 -> 0.5 = duration
                 curve: new Interval(0.0, 0.5 - index / icons.length / 2.0,
                     curve: Curves.easeOut),
               ),
@@ -64,7 +70,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
                 mini: true,
                 child: new Icon(
                   icons[index],
-                  size: 30.0,
+                  size: 40.0,
                 ),
                 onPressed: () {},
               ),
@@ -74,8 +80,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         }).toList()
           ..add(
             new Container(
-              height: 40.0,
-              width: 40.0,
+              height: 50.0,
               child: GestureDetector(
                 onLongPress: () {
                   if (_controller.isDismissed) {

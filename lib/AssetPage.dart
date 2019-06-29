@@ -26,13 +26,15 @@ class AssetPage extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       body: Stack(
         children: [
-          Container(
-            padding: EdgeInsets.fromLTRB(40.0, 20.0, 40.0, 0.0),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.0),
             child: ListView(
               children: [
                 Field(text: 'Asset Tag'),
                 Field(text: 'Serial Number'),
                 Field(text: 'Location', keyboardType: TextInputType.number),
+                Field(text: 'Manufacturer'),
+                Field(text: 'Model'),
                 Field(
                   text: 'Description',
                   keyboardType: TextInputType.multiline,
