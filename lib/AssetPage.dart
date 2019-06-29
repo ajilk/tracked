@@ -7,18 +7,6 @@ class AssetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-    final field = TextField(
-      // style: style,
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(15.0),
-        hintText: '....',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
-        ),
-      ),
-    );
-
     final editButton = Material(
       color: Color.fromRGBO(51, 153, 255, 1.0), // have MaterialApp track this
       elevation: 2.0,
