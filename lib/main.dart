@@ -1,9 +1,4 @@
 /* TODO: Dynamic Theme Selection */
-/* BUG: InkWell Effect on Drawer elements not working */
-/* IDEA: Custom Widget with Types (type: Enum)
-          e.g.  Image with short descriptions [ CustomImage(Type.short, src) ]
-                Image with long descriptions [ CustomImage(Type.long, src) ]
-*/
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,8 +15,7 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
-    // If you don't want any animation -> return child
-    // return child;
+    // If you don't want any animation -> return child;
     return new FadeTransition(opacity: animation, child: child);
   }
 }
