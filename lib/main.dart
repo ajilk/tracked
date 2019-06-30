@@ -6,6 +6,30 @@ import 'AssetPage.dart';
 import 'SigninPage.dart';
 import 'Tracked.dart';
 
+class SlideLeftRoute<T> extends MaterialPageRoute<T> {
+  SlideLeftRoute({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  // Widget build(context, animation, secondaryAnimation, child) {}
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    return SlideTransition(
+      position: new Tween<Offset>(
+        begin: const Offset(1.0, 0.0),
+        end: Offset.zero,
+      ).animate(animation),
+      child: new SlideTransition(
+        position: new Tween<Offset>(
+          begin: Offset.zero,
+          end: const Offset(1.0, 0.0),
+        ).animate(secondaryAnimation),
+        child: child,
+      ),
+    );
+  }
+}
+
 class FadeRoute<T> extends MaterialPageRoute<T> {
   FadeRoute({WidgetBuilder builder, RouteSettings settings})
       : super(builder: builder, settings: settings);
@@ -46,7 +70,8 @@ void main() {
                 return FadeRoute(builder: (context) => new Tracked());
                 break;
               case AssetPage.routeName:
-                return FadeRoute(builder: (context) => new AssetPage());
+                return SlideLeftRoute(builder: (context) => new AssetPage());
+                // return FadeRoute(builder: (context) => new AssetPage());
                 break;
             }
           },

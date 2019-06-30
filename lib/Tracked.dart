@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'AssetPage.dart';
 
 class Tracked extends StatefulWidget {
@@ -10,26 +11,11 @@ class Tracked extends StatefulWidget {
 class TrackedState extends State<Tracked> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-  AnimationController _controller;
-
-  static const List<IconData> icons = const [
-    Icons.home,
-    Icons.vertical_align_bottom,
-    Icons.vertical_align_top
-  ];
-
   @override
-  void initState() {
-    _controller = new AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    );
-  }
+  void initState() {super.initState();}
 
   @override
   Widget build(BuildContext context) {
-    final logo = Text('tracked', style: style.copyWith(fontSize: 40));
-
     final searchField = TextField(
       // style: style,
       onSubmitted: (input) {
@@ -43,86 +29,133 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(color: Theme.of(context).primaryColor),
         ),
+        suffixIcon: IconButton(
+          // icon: Icon(Icons.center_focus_weak, size: 30.0),
+          icon: Icon(
+            Icons.crop_free,
+            size: 30.0,
+          ),
+          // icon: Icon(Icons.filter_center_focus, size: 30.0),
+          onPressed: () => print('tapped [scan]'),
+        ),
+      ),
+    );
+
+    final drawer = Padding(
+      padding: EdgeInsets.fromLTRB(5.0, 30.0, 5.0, 0.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // children: <Widget>[Text('add'), Text('remove')],
+            children: [
+              ListTile(
+                title: Align(
+                  alignment: Alignment(-1.5, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('John Doe'),
+                      Text(
+                        'johndoe@gmail.com',
+                        style: TextStyle(color: Colors.white54),
+                      ),
+                    ],
+                  ),
+                ),
+                leading: Icon(Icons.account_circle),
+                onTap: () => print('tapped [export]'),
+              ),
+              Divider(height: 10.0, indent: 100.0),
+              ListTile(
+                title: Align(
+                  child: Text('Export'),
+                  alignment: Alignment(-1.2, 0),
+                ),
+                leading: Icon(Icons.vertical_align_top),
+                onTap: () => print('tapped [export]'),
+              ),
+              ListTile(
+                title: Align(
+                  child: Text('Import'),
+                  alignment: Alignment(-1.2, 0),
+                ),
+                leading: Icon(Icons.vertical_align_bottom),
+                onTap: () => print('tapped [import]'),
+              ),
+              Divider(),
+              ListTile(
+                title: Align(
+                  child: Text('Settings'),
+                  alignment: Alignment(-1.2, 0),
+                ),
+                leading: Icon(Icons.settings),
+                onTap: () => print('tapped [settings]'),
+              ),
+              ListTile(
+                title: Align(
+                  child: Text('Help & Feedback'),
+                  alignment: Alignment(-1.2, 0),
+                ),
+                leading: Icon(Icons.help_outline),
+                onTap: () => print('tapped [help]'),
+              ),
+            ],
+          ),
+          ListTile(
+            title: Center(
+              child: RichText(
+                text: TextSpan(
+                    text: 'Terms of Service',
+                    style: TextStyle(fontSize: 11.0),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => print('tapped [TOS]')),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    final data = Expanded(
+      child: Container(
+        margin: EdgeInsets.only(bottom: 20.0),
+        color: Colors.white24,
+        child: Center(
+          child: Text('INVENTORY DATA'),
+        ),
       ),
     );
 
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: new Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: new List.generate(icons.length, (int index) {
-          Widget child = new Container(
-            // decoration: BoxDecoration(border: Border.all(color: Colors.blue)),
-            height: 40.0,
-            alignment: FractionalOffset.center,
-            child: new ScaleTransition(
-              scale: new CurvedAnimation(
-                parent: _controller,
-                // 0.0 -> 0.5 = duration
-                curve: new Interval(0.0, 0.5 - index / icons.length / 2.0,
-                    curve: Curves.easeOut),
+      appBar: AppBar(
+        title: Text('tracked'),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        leading: Builder(
+          builder: (context) => IconButton(
+                icon: new Icon(Icons.dehaze, color: Colors.blue),
+                onPressed: () => Scaffold.of(context).openDrawer(),
               ),
-              child: new FloatingActionButton(
-                heroTag: null,
-                backgroundColor: Theme.of(context).backgroundColor,
-                mini: true,
-                child: new Icon(
-                  icons[index],
-                  size: 40.0,
-                ),
-                onPressed: () {},
-              ),
-            ),
-          );
-          return child;
-        }).toList()
-          ..add(
-            new Container(
-              height: 50.0,
-              child: GestureDetector(
-                onLongPress: () {
-                  if (_controller.isDismissed) {
-                    _controller.forward();
-                  } else {
-                    _controller.reverse();
-                  }
-                },
-                child: FittedBox(
-                  child: FloatingActionButton(
-                    backgroundColor: Theme.of(context).backgroundColor,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(
-                          width: 2.0, color: Theme.of(context).accentColor),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16.0),
-                      ),
-                    ),
-                    elevation: 4.0,
-                    child: Icon(Icons.filter_center_focus, size: 30.0),
-                    // Icon(Icons.center_focus_weak, size: 30.0),
-                    // Icon(Icons.crop_free, size: 30.0, ),
-                    onPressed: () => print('long pressed [SCAN]'),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        ),
       ),
-      body: Center(
-        child: Container(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                logo,
-                SizedBox(height: 30.0),
-                searchField,
-              ],
-            ),
+      drawer: SizedBox(
+        width: 250.0,
+        child: Drawer(child: drawer),
+      ),
+      body: Container(
+        child: Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              data,
+              searchField,
+            ],
           ),
         ),
       ),

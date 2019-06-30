@@ -25,7 +25,7 @@ class SigninPageState extends State<SigninPage> {
       print("Email: $_email");
       print("Password: $_password");
       //Signin to firebase
-      FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+      // FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.pushReplacementNamed(context, Tracked.routeName);
     }
   }
@@ -53,7 +53,6 @@ class SigninPageState extends State<SigninPage> {
     );
 
     final passwordField = TextFormField(
-      
       obscureText: true,
       validator: (input) =>
           input.length < 6 ? "Password must be more than 6 characters" : null,
