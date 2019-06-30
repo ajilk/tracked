@@ -51,6 +51,7 @@ class SigninPageState extends State<SigninPage> {
     );
 
     final passwordField = TextFormField(
+      
       obscureText: true,
       validator: (input) =>
           input.length < 6 ? "Password must be more than 6 characters" : null,
