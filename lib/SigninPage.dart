@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'Tracked.dart';
 import 'dart:core';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SigninPage extends StatefulWidget {
   static const routeName = '/';
@@ -23,7 +24,8 @@ class SigninPageState extends State<SigninPage> {
       key.currentState.save();
       print("Email: $_email");
       print("Password: $_password");
-      //TODO signin to firebase
+      //Signin to firebase
+      FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
       Navigator.pushReplacementNamed(context, Tracked.routeName);
     }
   }
