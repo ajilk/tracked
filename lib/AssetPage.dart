@@ -30,7 +30,7 @@ class AssetPage extends StatelessWidget {
             Field(text: 'Serial Number'),
             Field(text: 'Location', keyboardType: TextInputType.number),
             Field(text: 'Manufacturer'),
-            Field(text: 'Model'),
+            Field(text: 'Model',keyboardType: TextInputType.text,),
             Field(
               text: 'Description',
               keyboardType: TextInputType.multiline,

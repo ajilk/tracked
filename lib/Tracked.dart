@@ -32,7 +32,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         suffixIcon: IconButton(
           // icon: Icon(Icons.center_focus_weak, size: 30.0),
           icon: Icon(
-            Icons.crop_free,
+            Icons.center_focus_weak,
             size: 30.0,
           ),
           // icon: Icon(Icons.filter_center_focus, size: 30.0),
