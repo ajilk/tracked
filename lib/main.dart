@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'AssetPage.dart';
 import 'SigninPage.dart';
+import 'MenuPage.dart';
 import 'Tracked.dart';
 
 class SlideLeftRoute<T> extends MaterialPageRoute<T> {
@@ -39,8 +40,9 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
-    // If you don't want any animation -> return child;
-    return new FadeTransition(opacity: animation, child: child);
+    // If you don't want any animation:
+    return child;
+    // return new FadeTransition(opacity: animation, child: child);
   }
 }
 
@@ -72,6 +74,9 @@ void main() {
               case AssetPage.routeName:
                 return SlideLeftRoute(builder: (context) => new AssetPage());
                 // return FadeRoute(builder: (context) => new AssetPage());
+                break;
+              case MenuPage.routeName:
+                return FadeRoute(builder: (context) => new MenuPage());
                 break;
             }
           },
