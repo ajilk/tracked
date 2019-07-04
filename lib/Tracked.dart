@@ -11,6 +11,7 @@ class Tracked extends StatefulWidget {
 
 class TrackedState extends State<Tracked> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  bool menuVisible = true;
 
   @override
   void initState() {
@@ -19,11 +20,9 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
-     const color = Colors.white12; 
+    const color = Colors.white12;
     // TODO: Make this part of the bottomAppBar for automatic show/hide
     final searchField = TextField(
-      // style: style,
       onSubmitted: (input) {
         print(input);
         Navigator.pushNamed(context, AssetPage.routeName);
@@ -47,70 +46,86 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
       ),
     );
 
+    final menu = Container(
+      color: Theme.of(context).backgroundColor,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            icon: Icon(Icons.vertical_align_bottom),
+            color: Theme.of(context).accentColor,
+            onPressed: () => print('pressed [Import]'),
+          ),
+          IconButton(
+            icon: Icon(Icons.vertical_align_top),
+            color: Theme.of(context).accentColor,
+            onPressed: () => print('pressed [Export]'),
+          ),
+        ],
+      ),
+    );
+
     final data = Expanded(
       child: Container(
-        color: Colors.white24,
-        child: Center(        
-          child:ListView(
-  padding: const EdgeInsets.all(10.0),
-  physics: BouncingScrollPhysics(),
-  children: <Widget>[         //Window view of inventory for that particular device 
-    Container(
-      height: 50,
-      child: const Center(child: Text('INVENTORY DATA', 
-      textScaleFactor: 1.5,)
-      ),
+        color: Theme.of(context).backgroundColor,
+        child: Center(
+          child: ListView(
+            padding: const EdgeInsets.all(10.0),
+            physics: BouncingScrollPhysics(),
+            children: <Widget>[
+              //Window view of inventory for that particular device
+              Container(
+                height: 50,
+                child: const Center(
+                    child: Text(
+                  'INVENTORY DATA',
+                  textScaleFactor: 1.5,
+                )),
+              ),
+              Container(
+                  height: 50,
+                  color: color,
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.symmetric(vertical: 3.0),
+                  child: Text('Asset Tag :')),
+              Container(
+                  height: 50,
+                  color: color,
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.symmetric(vertical: 3.0),
+                  child: Text('Serial Number :')),
+              Container(
+                height: 50,
+                color: color,
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.symmetric(vertical: 3.0),
+                child: Text('Location :'),
+              ),
+              Container(
+                height: 50,
+                color: color,
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.symmetric(vertical: 3.0),
+                child: Text('Manufacturer :'),
+              ),
+              Container(
+                  height: 50,
+                  color: color,
+                  padding: EdgeInsets.all(5.0),
+                  margin: EdgeInsets.symmetric(vertical: 3.0),
+                  child: Text('Model :')),
 
-    ),
-    Container(
-      height: 50,
-      color: color,
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Asset Tag :')
-
-    ),
-    Container(
-      height: 50,
-      color: color,
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Serial Number :')
-
-    ),
-    Container(
-      height: 50,
-      color: color,
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Location :'),
-    ),
-    Container(
-      height: 50,
-      color: color,
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Manufacturer :'),
-      
-
-    ),
-    Container(
-      height: 50,
-      color: color,
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Model :')
-    ),
-    
-    Container(
-      
-      height: 160,
-      color: Colors.white24,
-       padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.symmetric(vertical:3.0),
-      child: Text('Description :',)
-    )],
-)
+              Container(
+                height: 160,
+                color: Colors.white24,
+                padding: EdgeInsets.all(5.0),
+                margin: EdgeInsets.symmetric(vertical: 3.0),
+                child: Text(
+                  'Description :',
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -118,11 +133,21 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('tracked',textScaleFactor: 1.3,),
-        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          'tracked',
+          style: TextStyle(color: Colors.white70),
+        ),
+        backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
-            icon: Icon(Icons.menu),
+            icon: menuVisible
+                ? Icon(Icons.keyboard_arrow_up)
+                : Icon(Icons.keyboard_arrow_down),
+            color: Theme.of(context).accentColor,
+            onPressed: () => setState(() => menuVisible = !menuVisible),
+          ),
+          IconButton(
+            icon: Icon(Icons.account_circle),
             color: Theme.of(context).accentColor,
             onPressed: () => Navigator.pushNamed(context, MenuPage.routeName),
           )
@@ -133,10 +158,12 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
+            menuVisible ? menu : new Container(width: 0.0, height: 0.0),
             data,
             Padding(
-                padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 5.0),
-                child: searchField),
+              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+              child: searchField,
+            ),
           ],
         ),
       ),

@@ -35,7 +35,7 @@ class MenuPage extends StatelessWidget {
                 ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Colors.white,
+                    color: Theme.of(context).accentColor,
                   ),
                   title: Align(
                     alignment: Alignment(-1.2, 0),
@@ -61,35 +61,12 @@ class MenuPage extends StatelessWidget {
                 Divider(height: 10.0, indent: 100.0),
                 ListTile(
                   title: Align(
-                    child: Text('Export'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(
-                    Icons.vertical_align_top,
-                    color: whitecolor,
-                  ),
-                  onTap: () => print('tapped [export]'),
-                ),
-                ListTile(
-                  title: Align(
-                    child: Text('Import'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(
-                    Icons.vertical_align_bottom,
-                    color: whitecolor,
-                  ),
-                  onTap: () => print('tapped [import]'),
-                ),
-                Divider(),
-                ListTile(
-                  title: Align(
                     child: Text('Settings'),
                     alignment: Alignment(-1.1, 0),
                   ),
                   leading: Icon(
                     Icons.settings,
-                    color: whitecolor,
+                    color: Theme.of(context).accentColor,
                   ),
                   onTap: () => print('tapped [settings]'),
                 ),
@@ -100,7 +77,7 @@ class MenuPage extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.help_outline,
-                    color: whitecolor,
+                    color: Theme.of(context).accentColor,
                   ),
                   onTap: () => print('tapped [help]'),
                 ),
