@@ -61,7 +61,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(Icons.menu),
             onPressed: () => Navigator.pushNamed(context, MenuPage.routeName),
           )
         ],
