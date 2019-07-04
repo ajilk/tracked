@@ -48,8 +48,49 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
     final data = Expanded(
       child: Container(
         color: Colors.white24,
-        child: Center(
-          child: Text('INVENTORY DATA'),
+        child: Center(        
+          child:ListView(
+  padding: const EdgeInsets.all(10.0),
+  children: <Widget>[         //Window view of inventory for that particular device 
+    Container(
+      height: 50,
+      child: const Center(child: Text('INVENTORY DATA',
+      textScaleFactor: 1.5,)
+      ),
+
+    ),
+    Container(
+      height: 50,
+      child: Text('Asset Tag :')
+
+    ),
+    Container(
+      height: 50,
+      child: Text('Serial Number :')
+
+    ),
+    Container(
+      height: 50,
+      child: Text('Location :'),
+    ),
+    Container(
+      height: 50,
+      child: Text('Manufacturer :'),
+      
+
+    ),
+    Container(
+      height: 50,
+      child: Text('Model :')
+    ),
+    
+    Container(
+      
+      height: 160,
+      color: Colors.white24,
+      child: Text('Description :',)
+    )],
+)
         ),
       ),
     );
@@ -58,7 +99,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('tracked'),
-        backgroundColor: Colors.transparent,
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
             icon: Icon(Icons.menu),
