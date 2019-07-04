@@ -19,7 +19,7 @@ class MenuPage extends StatelessWidget {
         backgroundColor: Theme.of(context).backgroundColor,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: whitecolor,
+          color: Theme.of(context).accentColor,
           onPressed: () => Navigator.pop(context),
         ),
       ),

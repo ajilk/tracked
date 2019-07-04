@@ -19,6 +19,8 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+     const color = Colors.white12; 
     // TODO: Make this part of the bottomAppBar for automatic show/hide
     final searchField = TextField(
       // style: style,
@@ -51,36 +53,52 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         child: Center(        
           child:ListView(
   padding: const EdgeInsets.all(10.0),
+  physics: BouncingScrollPhysics(),
   children: <Widget>[         //Window view of inventory for that particular device 
     Container(
       height: 50,
-      child: const Center(child: Text('INVENTORY DATA',
+      child: const Center(child: Text('INVENTORY DATA', 
       textScaleFactor: 1.5,)
       ),
 
     ),
     Container(
       height: 50,
+      color: color,
+      padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Asset Tag :')
 
     ),
     Container(
       height: 50,
+      color: color,
+      padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Serial Number :')
 
     ),
     Container(
       height: 50,
+      color: color,
+      padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Location :'),
     ),
     Container(
       height: 50,
+      color: color,
+      padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Manufacturer :'),
       
 
     ),
     Container(
       height: 50,
+      color: color,
+      padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Model :')
     ),
     
@@ -88,6 +106,8 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
       
       height: 160,
       color: Colors.white24,
+       padding: EdgeInsets.all(5.0),
+      margin: EdgeInsets.symmetric(vertical:3.0),
       child: Text('Description :',)
     )],
 )
@@ -98,11 +118,12 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
-        title: Text('tracked'),
+        title: Text('tracked',textScaleFactor: 1.3,),
         backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(
             icon: Icon(Icons.menu),
+            color: Theme.of(context).accentColor,
             onPressed: () => Navigator.pushNamed(context, MenuPage.routeName),
           )
         ],
