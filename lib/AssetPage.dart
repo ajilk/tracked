@@ -16,7 +16,7 @@ class AssetPage extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             color: Colors.blue,
-            icon: Icon(Icons.create),
+            icon: Icon(Icons.edit),
             onPressed: () => print('tapped [EDIT]'),
           ),
         ],
@@ -25,17 +25,18 @@ class AssetPage extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.0),
         child: ListView(
+          physics: BouncingScrollPhysics(),
           children: [
             Field(text: 'Asset Tag'),
             Field(text: 'Serial Number'),
-            Field(text: 'Location', keyboardType: TextInputType.number),
+            Field(text: 'Location', keyboardType: TextInputType.text),
             Field(text: 'Manufacturer'),
             Field(text: 'Model',keyboardType: TextInputType.text,),
             Field(
               text: 'Description',
               keyboardType: TextInputType.multiline,
             ),
-            SizedBox(height: 24.0),
+            SizedBox(height: 30.0),
           ],
         ),
       ),
