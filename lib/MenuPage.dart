@@ -1,16 +1,9 @@
-/*
-  Menu Page 
-  - profile details
-  - other tools e.g. import, export
-*/
-
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuPage extends StatelessWidget {
   static const routeName = '/menu';
-  static const whitecolor = Colors.white; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +28,6 @@ class MenuPage extends StatelessWidget {
                 ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Colors.white,
                   ),
                   title: Align(
                     alignment: Alignment(-1.2, 0),
@@ -61,35 +53,11 @@ class MenuPage extends StatelessWidget {
                 Divider(height: 10.0, indent: 100.0),
                 ListTile(
                   title: Align(
-                    child: Text('Export'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(
-                    Icons.vertical_align_top,
-                    color: whitecolor,
-                  ),
-                  onTap: () => print('tapped [export]'),
-                ),
-                ListTile(
-                  title: Align(
-                    child: Text('Import'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(
-                    Icons.vertical_align_bottom,
-                    color: whitecolor,
-                  ),
-                  onTap: () => print('tapped [import]'),
-                ),
-                Divider(),
-                ListTile(
-                  title: Align(
                     child: Text('Settings'),
                     alignment: Alignment(-1.1, 0),
                   ),
                   leading: Icon(
                     Icons.settings,
-                    color: whitecolor,
                   ),
                   onTap: () => print('tapped [settings]'),
                 ),
@@ -100,7 +68,6 @@ class MenuPage extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.help_outline,
-                    color: whitecolor,
                   ),
                   onTap: () => print('tapped [help]'),
                 ),
