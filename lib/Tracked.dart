@@ -39,7 +39,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
 
     return Padding(
       // padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(color: Theme.of(context).accentColor),

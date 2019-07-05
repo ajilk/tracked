@@ -38,6 +38,7 @@ class AssetPage extends StatelessWidget{
             Field(label: 'Model', hintText: asset.model, keyboardType: TextInputType.text,),
             Field(
               label: 'Description',
+              hintText: asset.description,
               keyboardType: TextInputType.multiline,
             ),
             SizedBox(height: 24.0),
