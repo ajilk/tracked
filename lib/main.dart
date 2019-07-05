@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'AssetPage.dart';
-import 'SigninPage.dart';
-import 'MenuPage.dart';
-import 'Tracked.dart';
+import 'pages/AssetPage.dart';
+import 'pages/SigninPage.dart';
+import 'pages/MenuPage.dart';
+import 'pages/Tracked.dart';
 
 class SlideLeftRoute<T> extends MaterialPageRoute<T> {
   SlideLeftRoute({WidgetBuilder builder, RouteSettings settings})

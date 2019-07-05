@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
-import 'Asset.dart';
+import '../models/Asset.dart';
 
 class Tracked extends StatefulWidget {
   static const routeName = '/tracked';
@@ -23,8 +23,12 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('userEmail').snapshots(),
-      builder: (context, snapshot) =>
-          _buildList(context, snapshot.data.documents),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData)
+          return CircularProgressIndicator();
+        else
+          return _buildList(context, snapshot.data.documents);
+      },
     );
   }
 
@@ -47,7 +51,8 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         ),
         child: ListTile(
           title: Text(asset.doe),
-          onTap: () => Navigator.pushNamed(context, AssetPage.routeName, arguments: asset),
+          onTap: () => Navigator.pushNamed(context, AssetPage.routeName,
+              arguments: asset),
         ),
       ),
     );

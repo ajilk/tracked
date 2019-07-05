@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'Field.dart';
-import 'Asset.dart';
+import '../models/Field.dart';
+import '../models/Asset.dart';
 
 class AssetPage extends StatelessWidget{
   static const routeName = '/assetPage';
