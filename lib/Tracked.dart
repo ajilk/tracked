@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
+import 'Asset.dart';
 
 class Tracked extends StatefulWidget {
   static const routeName = '/tracked';
@@ -16,6 +18,39 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+  }
+
+  Widget _buildBody(BuildContext context) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('userEmail').snapshots(),
+      builder: (context, snapshot) =>
+          _buildList(context, snapshot.data.documents),
+    );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    return ListView(
+        children:
+            snapshot.map((data) => _buildListItem(context, data)).toList());
+  }
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+    final asset = Asset.fromSnapshot(data);
+
+    return Padding(
+      // padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).accentColor),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: ListTile(
+          title: Text(asset.doe),
+          onTap: () => Navigator.pushNamed(context, AssetPage.routeName, arguments: asset),
+        ),
+      ),
+    );
   }
 
   @override
@@ -47,7 +82,6 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
     );
 
     final menu = Container(
-      color: Theme.of(context).backgroundColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -62,71 +96,6 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
             onPressed: () => print('pressed [Export]'),
           ),
         ],
-      ),
-    );
-
-    final data = Expanded(
-      child: Container(
-        color: Theme.of(context).backgroundColor,
-        child: Center(
-          child: ListView(
-            padding: const EdgeInsets.all(10.0),
-            physics: BouncingScrollPhysics(),
-            children: <Widget>[
-              //Window view of inventory for that particular device
-              Container(
-                height: 50,
-                child: const Center(
-                    child: Text(
-                  'INVENTORY DATA',
-                  textScaleFactor: 1.5,
-                )),
-              ),
-              Container(
-                  height: 50,
-                  color: color,
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.symmetric(vertical: 3.0),
-                  child: Text('Asset Tag :')),
-              Container(
-                  height: 50,
-                  color: color,
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.symmetric(vertical: 3.0),
-                  child: Text('Serial Number :')),
-              Container(
-                height: 50,
-                color: color,
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.symmetric(vertical: 3.0),
-                child: Text('Location :'),
-              ),
-              Container(
-                height: 50,
-                color: color,
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.symmetric(vertical: 3.0),
-                child: Text('Manufacturer :'),
-              ),
-              Container(
-                  height: 50,
-                  color: color,
-                  padding: EdgeInsets.all(5.0),
-                  margin: EdgeInsets.symmetric(vertical: 3.0),
-                  child: Text('Model :')),
-
-              Container(
-                height: 160,
-                color: Colors.white24,
-                padding: EdgeInsets.all(5.0),
-                margin: EdgeInsets.symmetric(vertical: 3.0),
-                child: Text(
-                  'Description :',
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
 
@@ -159,7 +128,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             menuVisible ? menu : new Container(width: 0.0, height: 0.0),
-            data,
+            Expanded(child: _buildBody(context)),
             Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
               child: searchField,

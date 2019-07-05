@@ -72,8 +72,9 @@ void main() {
                 return FadeRoute(builder: (context) => new Tracked());
                 break;
               case AssetPage.routeName:
-                return SlideLeftRoute(builder: (context) => new AssetPage());
-                // return FadeRoute(builder: (context) => new AssetPage());
+                return MaterialPageRoute(builder: (context) => new AssetPage(asset: settings.arguments));
+                // return SlideLeftRoute(builder: (context) => new AssetPage(asset: settings.arguments));
+                // return FadeRoute(builder: (context) => new AssetPage(asset: settings.arguments));
                 break;
               case MenuPage.routeName:
                 return FadeRoute(builder: (context) => new MenuPage());

@@ -34,7 +34,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.tracked"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 28
 		multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
@@ -62,4 +62,4 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:17.0.0'
 	implementation 'com.android.support:multidex:1.0.3'
 }
-// apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin
+apply plugin: 'com.google.gms.google-services'  // Google Play services Gradle plugin

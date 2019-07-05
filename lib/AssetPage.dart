@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'Field.dart';
+import 'Asset.dart';
 
-class AssetPage extends StatelessWidget {
+class AssetPage extends StatelessWidget{
   static const routeName = '/assetPage';
+  final Asset asset;
+
+  const AssetPage({Key key, @required this.asset}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +31,13 @@ class AssetPage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 15.0),
         child: ListView(
           children: [
-            Field(text: 'Asset Tag'),
-            Field(text: 'Serial Number'),
-            Field(text: 'Location', keyboardType: TextInputType.number),
-            Field(text: 'Manufacturer'),
-            Field(text: 'Model',keyboardType: TextInputType.text,),
+            Field(label: 'Asset Tag', hintText: asset.doe),
+            Field(label: 'Serial Number', hintText: asset.serial),
+            Field(label: 'Location', hintText: asset.location.toString(), keyboardType: TextInputType.number),
+            Field(label: 'Manufacturer', hintText: asset.manufacturer,),
+            Field(label: 'Model', hintText: asset.model, keyboardType: TextInputType.text,),
             Field(
-              text: 'Description',
+              label: 'Description',
               keyboardType: TextInputType.multiline,
             ),
             SizedBox(height: 24.0),

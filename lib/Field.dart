@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Field extends StatelessWidget {
-  final String text;
+  final String label;
+  final String value;
   final String hintText;
   final TextInputType keyboardType;
   Field(
-      {this.text = '',
+      {this.label = '',
       this.hintText = ' [ N / A ] ',
+      this.value,
       this.keyboardType = TextInputType.text});
 
   @override
@@ -30,7 +32,7 @@ class Field extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: Text(text),
+        child: Text(label),
       ),
     );
 
@@ -38,7 +40,7 @@ class Field extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         children: [
-          Visibility(visible: text.isNotEmpty, child: fieldInfo),
+          Visibility(visible: label.isNotEmpty, child: fieldInfo),
           field
         ],
       ),
