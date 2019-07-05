@@ -1,16 +1,9 @@
-/*
-  Menu Page 
-  - profile details
-  - other tools e.g. import, export
-*/
-
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuPage extends StatelessWidget {
   static const routeName = '/menu';
-  static const whitecolor = Colors.white; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +28,6 @@ class MenuPage extends StatelessWidget {
                 ListTile(
                   leading: Icon(
                     Icons.account_circle,
-                    color: Theme.of(context).accentColor,
                   ),
                   title: Align(
                     alignment: Alignment(-1.2, 0),
@@ -66,7 +58,6 @@ class MenuPage extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.settings,
-                    color: Theme.of(context).accentColor,
                   ),
                   onTap: () => print('tapped [settings]'),
                 ),
@@ -77,7 +68,6 @@ class MenuPage extends StatelessWidget {
                   ),
                   leading: Icon(
                     Icons.help_outline,
-                    color: Theme.of(context).accentColor,
                   ),
                   onTap: () => print('tapped [help]'),
                 ),
