@@ -6,6 +6,7 @@ import 'pages/AssetPage.dart';
 import 'pages/SigninPage.dart';
 import 'pages/MenuPage.dart';
 import 'pages/Tracked.dart';
+import 'theme.dart';
 
 class SlideLeftRoute<T> extends MaterialPageRoute<T> {
   SlideLeftRoute({WidgetBuilder builder, RouteSettings settings})
@@ -52,15 +53,7 @@ void main() {
       runApp(
         new MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            brightness: Brightness.dark,
-            hintColor: Colors.grey.shade500,
-            backgroundColor: Colors.black,
-            splashColor: Colors.blue,
-            accentColor: Color.fromRGBO(51, 153, 255, 1.0),
-            buttonColor: Color.fromRGBO(51, 153, 255, 1.0),
-          ),
-
+          theme: buildThemeData(),
           home: SigninPage(),
           // initialRoute: tracked.routeName,
           onGenerateRoute: (settings) {
@@ -72,7 +65,7 @@ void main() {
                 return FadeRoute(builder: (context) => new Tracked());
                 break;
               case AssetPage.routeName:
-                return SlideLeftRoute(builder: (context) => new AssetPage(asset: settings.arguments));
+                return FadeRoute(builder: (context) => new AssetPage(asset: settings.arguments));
                 break;
               case MenuPage.routeName:
                 return FadeRoute(builder: (context) => new MenuPage());

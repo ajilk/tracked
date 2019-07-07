@@ -13,7 +13,7 @@ class Tracked extends StatefulWidget {
 
 class TrackedState extends State<Tracked> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  bool menuVisible = true;
+  bool filterOptionsVisible = false;
 
   @override
   void initState() {
@@ -25,7 +25,13 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
       stream: Firestore.instance.collection('userEmail').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
-          return CircularProgressIndicator();
+          return Center(
+            child: SizedBox(
+              height: 50.0,
+              width: 50.0,
+              child: CircularProgressIndicator(),
+            ),
+          );
         else
           return _buildList(context, snapshot.data.documents);
       },
@@ -114,11 +120,11 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
-            icon: menuVisible
+            icon: filterOptionsVisible
                 ? Icon(Icons.keyboard_arrow_up)
-                : Icon(Icons.keyboard_arrow_down),
+                : Icon(Icons.filter_list),
             color: Theme.of(context).accentColor,
-            onPressed: () => setState(() => menuVisible = !menuVisible),
+            onPressed: () => setState(() => filterOptionsVisible = !menuVisible),
           ),
           IconButton(
             icon: Icon(Icons.account_circle),
@@ -132,7 +138,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            menuVisible ? menu : new Container(width: 0.0, height: 0.0),
+            filterOptionsVisible ? menu : new Container(width: 0.0, height: 0.0),
             Expanded(child: _buildBody(context)),
             Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),

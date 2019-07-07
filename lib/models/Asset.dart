@@ -21,4 +21,9 @@ class Asset {
 
   Asset.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  @override
+  String toString() {
+    return 'Asset Tag: [$doe], Serial Number: [$serial], Manufacturer: [$manufacturer], Model: [$model], Location: [$location], Description: [$description]';
+  }
 }
