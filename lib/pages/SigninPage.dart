@@ -15,18 +15,35 @@ class SigninPage extends StatefulWidget {
 }
 
 class SigninPageState extends State<SigninPage> {
-  String _email, _password;
 
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
-  void _signIn() {
-    if (key.currentState.validate()) {
+  String _email, _password;
+
+bool validateandSave(){
+
+   final form = key.currentState;
+   if(form.validate()){
+     return true;
+   }else{
+     return false;
+   }
+ }
+
+  Future<void> _signIn() async{
+    final formState = key.currentState;
+    if (formState.validate()) {
       key.currentState.save();
+      try{
+        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+        print("Signed In: ${user.uid}");
+        Navigator.push(context, MaterialPageRoute(builder: (context) => Tracked()));
+      }catch(e){
+        print(e);
+      }
       print("Email: $_email");
       print("Password: $_password");
-      //Signin to firebase
-      // FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
-      Navigator.pushReplacementNamed(context, Tracked.routeName);
+
     }
   }
 
