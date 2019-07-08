@@ -18,6 +18,7 @@ class Asset {
         model = asset['model'],
         location = asset['location'],
         description = asset['description'];
+        
 
   Asset.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
@@ -124,7 +123,7 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
                 ? Icon(Icons.keyboard_arrow_up)
                 : Icon(Icons.filter_list),
             color: Theme.of(context).accentColor,
-            onPressed: () => setState(() => filterOptionsVisible = !menuVisible),
+            onPressed: () => setState(() => filterOptionsVisible = !filterOptionsVisible),
           ),
           IconButton(
             icon: Icon(Icons.account_circle),
