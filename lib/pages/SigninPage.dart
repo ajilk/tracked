@@ -4,9 +4,9 @@
     so the user interface is familiar to them
 */
 import 'package:flutter/material.dart';
-import 'Tracked.dart';
-import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:core';
+import 'TrackPage.dart';
 
 
 class SigninPage extends StatefulWidget {
@@ -16,35 +16,29 @@ class SigninPage extends StatefulWidget {
 }
 
 class SigninPageState extends State<SigninPage> {
-
   final GlobalKey<FormState> key = GlobalKey<FormState>();
-
   String _email, _password;
 
-bool validateandSave(){
+  // bool validateAndSave() => key.currentState.validate() ? true : false;
 
-   final form = key.currentState;
-   if(form.validate()){
-     return true;
-   }else{
-     return false;
-   }
- }
-
-  Future<void> _signIn() async{
+  Future<void> _signIn() async {
     final formState = key.currentState;
     if (formState.validate()) {
       key.currentState.save();
-      try{
-        FirebaseUser user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+      try {
+        FirebaseUser user = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: _email, password: _password);
         print("Signed In: ${user.uid}");
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Tracked()));
-      }catch(e){
+        Navigator.pushReplacementNamed(
+          context,
+          TrackPage.routeName,
+          arguments: user,
+        );
+      } catch (e) {
         print(e);
       }
       print("Email: $_email");
       print("Password: $_password");
-
     }
   }
 
@@ -107,8 +101,7 @@ bool validateandSave(){
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Form(
-            //TODO: Implement key
-            key: key, // Like this ?
+            key: key,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[

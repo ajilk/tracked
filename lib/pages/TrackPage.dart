@@ -1,27 +1,50 @@
+/* TODO: move searchField into the appBar for automatic hiding */
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
 import '../models/Asset.dart';
 
-class Tracked extends StatefulWidget {
+class TrackPage extends StatefulWidget {
   static const routeName = '/tracked';
+  final FirebaseUser user;
+
+  TrackPage({Key key, @required this.user}) : super(key: key);
+
   @override
-  TrackedState createState() => new TrackedState();
+  _TrackPageState createState() => new _TrackPageState(user);
 }
 
-class TrackedState extends State<Tracked> with TickerProviderStateMixin {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
+  FirebaseUser user;
+  _TrackPageState(this.user);
+
+  final searchController = TextEditingController();
+  bool scanMode = true;
   bool filterOptionsVisible = false;
 
   @override
   void initState() {
     super.initState();
+    searchController.addListener(setSearchMode);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
+  }
+
+  void setSearchMode() {
+    searchController.text.length == 0
+        ? setState(() => scanMode = true)
+        : setState(() => scanMode = false);
   }
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('userEmail').snapshots(),
+      stream: Firestore.instance.collection(user.uid).snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(
@@ -65,47 +88,39 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    const color = Colors.white12;
     // TODO: Make this part of the bottomAppBar for automatic show/hide
     final searchField = TextField(
-      onSubmitted: (input) {
-        print(input);
+      controller: searchController,
+      onSubmitted: (value) {
         Navigator.pushNamed(context, AssetPage.routeName);
       },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.all(15.0),
-        hintText: '[DOE] or [S/N]',
+        hintText: 'Search',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
           borderSide: BorderSide(color: Theme.of(context).primaryColor),
         ),
-        suffixIcon: IconButton(
-          // icon: Icon(Icons.center_focus_weak, size: 30.0),
-          icon: Icon(
-            Icons.center_focus_weak,
-            size: 30.0,
-          ),
-          // icon: Icon(Icons.filter_center_focus, size: 30.0),
-          onPressed: () => print('tapped [scan]'),
-        ),
+        suffixIcon: scanMode
+            ? IconButton(
+                // icon: Icon(Icons.center_focus_weak, size: 30.0),
+                // icon: Icon(Icons.filter_center_focus, size: 30.0),
+                icon: Icon(Icons.center_focus_weak, size: 30.0),
+                onPressed: () => print('tapped [scan]'),
+              )
+            : IconButton(
+                icon: Icon(Icons.search, size: 30.0),
+                onPressed: () => print('pressed Search'),
+              ),
       ),
     );
 
-    final menu = Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          IconButton(
-            icon: Icon(Icons.vertical_align_bottom),
-            color: Theme.of(context).accentColor,
-            onPressed: () => print('pressed [Import]'),
-          ),
-          IconButton(
-            icon: Icon(Icons.vertical_align_top),
-            color: Theme.of(context).accentColor,
-            onPressed: () => print('pressed [Export]'),
-          ),
-        ],
+    final filterOptions = Container(
+      child: Center(
+        child: Text(
+          '[ Filter Options ] ',
+          style: TextStyle(fontSize: 30),
+        ),
       ),
     );
 
@@ -123,12 +138,19 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
                 ? Icon(Icons.keyboard_arrow_up)
                 : Icon(Icons.filter_list),
             color: Theme.of(context).accentColor,
-            onPressed: () => setState(() => filterOptionsVisible = !filterOptionsVisible),
+            onPressed: () =>
+                setState(() => filterOptionsVisible = !filterOptionsVisible),
           ),
           IconButton(
             icon: Icon(Icons.account_circle),
             color: Theme.of(context).accentColor,
-            onPressed: () => Navigator.pushNamed(context, MenuPage.routeName),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                MenuPage.routeName,
+                arguments: user,
+              );
+            },
           )
         ],
       ),
@@ -137,7 +159,9 @@ class TrackedState extends State<Tracked> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            filterOptionsVisible ? menu : new Container(width: 0.0, height: 0.0),
+            filterOptionsVisible
+                ? filterOptions
+                : new Container(width: 0.0, height: 0.0),
             Expanded(child: _buildBody(context)),
             Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),

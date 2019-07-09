@@ -11,14 +11,12 @@ class Asset {
   final String description;
 
   Asset.fromMap(Map<String, dynamic> asset, {this.reference})
-      : assert(asset['doe'] != null),
-        doe = asset['doe'],
+      : doe = asset['doe'],
         serial = asset['serial'],
         manufacturer = asset['manufacturer'],
         model = asset['model'],
         location = asset['location'],
         description = asset['description'];
-        
 
   Asset.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);

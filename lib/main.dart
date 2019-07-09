@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'pages/AssetPage.dart';
 import 'pages/SigninPage.dart';
 import 'pages/MenuPage.dart';
-import 'pages/Tracked.dart';
+import 'pages/TrackPage.dart';
 import 'theme.dart';
 
 class SlideLeftRoute<T> extends MaterialPageRoute<T> {
@@ -41,9 +41,8 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
-    // If you don't want any animation:
-    return child;
-    // return new FadeTransition(opacity: animation, child: child);
+    // return child;
+    return new FadeTransition(opacity: animation, child: child);
   }
 }
 
@@ -55,20 +54,27 @@ void main() {
           debugShowCheckedModeBanner: false,
           theme: buildThemeData(),
           home: SigninPage(),
-          // initialRoute: tracked.routeName,
+          initialRoute: SigninPage.routeName,
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case SigninPage.routeName:
                 return FadeRoute(builder: (context) => new SigninPage());
                 break;
-              case Tracked.routeName:
-                return FadeRoute(builder: (context) => new Tracked());
+              case TrackPage.routeName:
+                return FadeRoute(
+                  builder: (context) => new TrackPage(user: settings.arguments),
+                );
                 break;
               case AssetPage.routeName:
-                return FadeRoute(builder: (context) => new AssetPage(asset: settings.arguments));
+                return FadeRoute(
+                  builder: (context) =>
+                      new AssetPage(asset: settings.arguments),
+                );
                 break;
               case MenuPage.routeName:
-                return FadeRoute(builder: (context) => new MenuPage());
+                return FadeRoute(
+                  builder: (context) => new MenuPage(user: settings.arguments),
+                );
                 break;
             }
           },
