@@ -71,9 +71,7 @@ class _AssetPageState extends State<AssetPage> {
             decoration: InputDecoration(
                 labelText: 'Description', alignLabelWithHint: true),
             keyboardType: TextInputType.multiline,
-            maxLines: 10,
-
-            // onSaved: (value) => print('<saved $value to inventory>'),
+            maxLines: 15,
             onSaved: (value) {
               Firestore.instance.runTransaction(
                 (transaction) async {
@@ -101,13 +99,14 @@ class _AssetPageState extends State<AssetPage> {
           IconButton(
             color: Colors.blue,
             icon: editable ? Icon(Icons.save) : Icon(Icons.edit),
-            onPressed: () => setState(
-                  () {
-                    editable = !editable;
-                    _assetFormKey.currentState.save();
-                    print(asset.toString());
-                  },
-                ),
+            onPressed: () {
+              setState(
+                () {
+                  editable = !editable;
+                  _assetFormKey.currentState.save();
+                },
+              );
+            },
           ),
         ],
       ),
