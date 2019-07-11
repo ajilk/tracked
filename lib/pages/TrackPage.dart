@@ -1,4 +1,3 @@
-/* TODO: move searchField into the appBar for automatic hiding */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,13 +23,15 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
 
   final searchController = TextEditingController();
   bool scanMode = true;
-  bool filterOptionsVisible = false;
-  String result;
+  String scanResult;
+  Widget body;
 
   @override
   void initState() {
     super.initState();
     searchController.addListener(setSearchMode);
+    body = _buildBody(
+        context, Firestore.instance.collection(user.uid).snapshots());
   }
 
   @override
@@ -45,37 +46,9 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
         : setState(() => scanMode = false);
   }
 
-  Future scan() async {
-    try {
-      String barcode = await BarcodeScanner.scan();
-      setState(() {
-        result = barcode;
-      });
-    } on PlatformException catch (ex) {
-      if (ex.code == BarcodeScanner.CameraAccessDenied) {
-        setState(() {
-          result = "Camera permission was denied";
-        });
-      } else {
-        setState(() {
-          result = "Unknown Error $ex";
-        });
-      }
-    } on FormatException {
-      setState(() {
-        // You pressed the back button before scanning anything
-        result = "";
-      });
-    } catch (ex) {
-      setState(() {
-        result = "Unknown Error $ex";
-      });
-    }
-  }
-
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, Stream<QuerySnapshot> stream) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection(user.uid).snapshots(),
+      stream: stream,
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(
@@ -119,42 +92,103 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Make this part of the bottomAppBar for automatic show/hide
-    final searchField = TextField(
-      controller: searchController,
-      onSubmitted: (value) {
-        Navigator.pushNamed(context, AssetPage.routeName);
-      },
-      decoration: InputDecoration(
-        contentPadding: EdgeInsets.all(15.0),
-        hintText: 'Search',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: BorderSide(color: Theme.of(context).primaryColor),
+    Future scan() async {
+      try {
+        String barcode = await BarcodeScanner.scan();
+        setState(() => scanResult = barcode);
+      } on PlatformException catch (ex) {
+        if (ex.code == BarcodeScanner.CameraAccessDenied) {
+          setState(() => scanResult = "Camera permission was denied");
+        } else {
+          setState(() => scanResult = "Unknown Error $ex");
+        }
+      } on FormatException {
+        // Pressed the back button before scanning anything
+        setState(() => scanResult = "");
+      } catch (ex) {
+        setState(() => scanResult = "Unknown Error $ex");
+      }
+    }
+
+    void search(String value) {
+      RegExp doePattern = new RegExp(r'^DOE');
+      setState(
+        () {
+          body = _buildBody(
+              context,
+              doePattern.hasMatch(value)
+                  ? Firestore.instance
+                      .collection(user.uid)
+                      .where('doe', isEqualTo: value.toUpperCase())
+                      .snapshots()
+                  : Firestore.instance
+                      .collection(user.uid)
+                      .where('serial', isEqualTo: value.toUpperCase())
+                      .snapshots());
+        },
+      );
+    }
+
+    void clearSearch() {
+      searchController.text = '';
+      setState(() {
+        body = _buildBody(
+          context,
+          Firestore.instance.collection(user.uid).snapshots(),
+        );
+      });
+    }
+
+    final suffixIconOfSearchField = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        searchController.text.length > 0
+            ? IconButton(icon: Icon(Icons.clear), onPressed: clearSearch)
+            : Container(height: 0, width: 0),
+        Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).accentColor),
+            color: Theme.of(context).accentColor,
+            borderRadius: BorderRadius.horizontal(
+              right: Radius.circular(10.0),
+            ),
+          ),
+          child: scanMode
+              ? IconButton(
+                  icon: Icon(Icons.center_focus_weak,
+                      size: 30.0, color: Colors.white),
+                  onPressed: () {
+                    scan();
+                    search(scanResult);
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search, size: 30.0, color: Colors.white),
+                  onPressed: () => search(searchController.text),
+                ),
         ),
-        suffixIcon: scanMode
-            ? IconButton(
-                // icon: Icon(Icons.center_focus_weak, size: 30.0),
-                // icon: Icon(Icons.filter_center_focus, size: 30.0),
-                icon: Icon(Icons.center_focus_weak, size: 30.0),
-                onPressed: () {
-                  scan();
-                  searchController.text = result;
-                })
-            : IconButton(
-                icon: Icon(Icons.search, size: 30.0),
-                onPressed: () => print('pressed Search'),
-              ),
-      ),
+      ],
     );
 
-    final filterOptions = Container(
-      child: Center(
-        child: Text(
-          '[ Filter Options ] ',
-          style: TextStyle(fontSize: 30),
+    final searchField = Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: searchController,
+            onSubmitted: (value) {
+              value.isEmpty ? clearSearch() : search(value);
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(15.0),
+              hintText: 'Search',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              suffixIcon: suffixIconOfSearchField,
+            ),
+          ),
         ),
-      ),
+      ],
     );
 
     return Scaffold(
@@ -166,14 +200,6 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
-          IconButton(
-            icon: filterOptionsVisible
-                ? Icon(Icons.keyboard_arrow_up)
-                : Icon(Icons.filter_list),
-            color: Theme.of(context).accentColor,
-            onPressed: () =>
-                setState(() => filterOptionsVisible = !filterOptionsVisible),
-          ),
           IconButton(
             icon: Icon(Icons.account_circle),
             color: Theme.of(context).accentColor,
@@ -192,10 +218,7 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            filterOptionsVisible
-                ? filterOptions
-                : new Container(width: 0.0, height: 0.0),
-            Expanded(child: _buildBody(context)),
+            Expanded(child: body),
             Padding(
               padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
               child: searchField,

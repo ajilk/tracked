@@ -11,15 +11,15 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // signout() => Navigator.pushReplacementNamed(context, SigninPage.routeName);
-    signout() => Navigator.pushNamedAndRemoveUntil(
-          context,
-          SigninPage.routeName,
-          (Route r) => r == null,
-        );
+    signOut() {
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        SigninPage.routeName,
+        (Route r) => r == null,
+      );
+    }
 
     return Scaffold(
-      // TODO: Automatically hide appBar when scrolling main page
       appBar: AppBar(
         backgroundColor: Theme.of(context).backgroundColor,
         leading: IconButton(
@@ -42,45 +42,15 @@ class MenuPage extends StatelessWidget {
                   title: Align(
                     alignment: Alignment(-1.2, 0),
                     child: Text('${user.email}'),
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   mainAxisSize: MainAxisSize.min,
-                    //   children:
-                    //   [
-                    //     Text('${user.displayName}'),
-                    //     Text(
-                    //       '${user.email}',
-                    //       style: TextStyle(color: Colors.white54),
-                    //     ),
-                    //   ],
-                    // ),
                   ),
                   trailing: IconButton(
                     icon: Icon(Icons.exit_to_app),
                     color: Theme.of(context).accentColor,
-                    // onPressed: () => print('tapped [Sign Out]'),
-                    onPressed: () => signout(),
+                    onPressed: () => signOut(),
                   ),
                   onTap: () => print('tapped [UserInfo]'),
                 ),
-                Divider(height: 20.0, indent: 100.0),
-                ListTile(
-                  title: Align(
-                    child: Text('Import'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(Icons.vertical_align_bottom),
-                  onTap: () => print('tapped [import]'),
-                ),
-                ListTile(
-                  title: Align(
-                    child: Text('Export'),
-                    alignment: Alignment(-1.1, 0),
-                  ),
-                  leading: Icon(Icons.vertical_align_top),
-                  onTap: () => print('tapped [export]'),
-                ),
-                Divider(height: 20.0),
+                Divider(height: 10.0, indent: 100.0),
                 ListTile(
                   title: Align(
                     child: Text('Settings'),
