@@ -1,7 +1,9 @@
 /* TODO: move searchField into the appBar for automatic hiding */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
 import '../models/Asset.dart';
@@ -23,6 +25,7 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
   final searchController = TextEditingController();
   bool scanMode = true;
   bool filterOptionsVisible = false;
+  String result;
 
   @override
   void initState() {
@@ -40,6 +43,34 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
     searchController.text.length == 0
         ? setState(() => scanMode = true)
         : setState(() => scanMode = false);
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() {
+        result = barcode;
+      });
+    } on PlatformException catch (ex) {
+      if (ex.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          result = "Camera permission was denied";
+        });
+      } else {
+        setState(() {
+          result = "Unknown Error $ex";
+        });
+      }
+    } on FormatException {
+      setState(() {
+        // You pressed the back button before scanning anything
+        result = "";
+      });
+    } catch (ex) {
+      setState(() {
+        result = "Unknown Error $ex";
+      });
+    }
   }
 
   Widget _buildBody(BuildContext context) {
@@ -106,8 +137,10 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
                 // icon: Icon(Icons.center_focus_weak, size: 30.0),
                 // icon: Icon(Icons.filter_center_focus, size: 30.0),
                 icon: Icon(Icons.center_focus_weak, size: 30.0),
-                onPressed: () => print('tapped [scan]'),
-              )
+                onPressed: () {
+                  scan();
+                  searchController.text = result;
+                })
             : IconButton(
                 icon: Icon(Icons.search, size: 30.0),
                 onPressed: () => print('pressed Search'),
