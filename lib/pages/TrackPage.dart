@@ -158,8 +158,12 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
                   icon: Icon(Icons.center_focus_weak,
                       size: 30.0, color: Colors.white),
                   onPressed: () {
-                    scan();
-                    search(scanResult);
+                    scan().then(
+                      (value) => setState(() {
+                            searchController.text = scanResult;
+                            search(scanResult);
+                          }),
+                    );
                   },
                 )
               : IconButton(
