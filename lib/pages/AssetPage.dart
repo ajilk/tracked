@@ -13,6 +13,31 @@ class AssetPage extends StatefulWidget {
 }
 
 class _AssetPageState extends State<AssetPage> {
+  TextEditingController tcontroller = TextEditingController();
+
+  createAlertDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(title: Text('Edit'),actions: <Widget>[
+            MaterialButton(
+              elevation: (5.0),
+              child: Text("Archive"),
+              color: Color.fromRGBO(51, 153, 255, 1.0),
+              textColor: Colors.white,
+              onPressed: () => print("Archive pressed"),
+            ),
+            MaterialButton(
+              child: Text("Add"),
+              color: Color.fromRGBO(51, 153, 255, 1.0),
+              textColor: Colors.white,
+              elevation: (5.0),
+              onPressed: () => print("Add Pressed"),
+            ),
+          ]);
+        });
+  }
+
   final _assetFormKey = GlobalKey<FormState>();
   bool editable = false;
   Asset asset;
@@ -21,6 +46,19 @@ class _AssetPageState extends State<AssetPage> {
 
   @override
   Widget build(BuildContext context) {
+    final editButton = Material(
+      color: Color.fromRGBO(51, 153, 255, 1.0), // have MaterialApp track this
+      elevation: 2.0,
+      borderRadius: BorderRadius.circular(10.0),
+      child: MaterialButton(
+          onPressed: () => createAlertDialog(context),
+          minWidth: MediaQuery.of(context).size.width, // matches parent width
+          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+          child: Text(
+            'Edit',
+            textAlign: TextAlign.left,
+          )),
+    );
     final assetForm = Form(
       key: _assetFormKey,
       child: ListView(
@@ -44,7 +82,8 @@ class _AssetPageState extends State<AssetPage> {
             decoration: InputDecoration(labelText: 'Serial Number'),
             onSaved: (value) => Firestore.instance.runTransaction(
                   (transaction) async {
-                    await transaction.update(asset.reference, {'serial': value});
+                    await transaction
+                        .update(asset.reference, {'serial': value});
                   },
                 ),
           ),
@@ -57,7 +96,8 @@ class _AssetPageState extends State<AssetPage> {
             //     isNumeric(value) ? null : 'Location must be a number',
             onSaved: (value) => Firestore.instance.runTransaction(
                   (transaction) async {
-                    await transaction.update(asset.reference, {'location': value});
+                    await transaction
+                        .update(asset.reference, {'location': value});
                   },
                 ),
           ),
@@ -68,7 +108,8 @@ class _AssetPageState extends State<AssetPage> {
             decoration: InputDecoration(labelText: 'Manufacturer'),
             onSaved: (value) => Firestore.instance.runTransaction(
                   (transaction) async {
-                    await transaction.update(asset.reference, {'manufacturer': value});
+                    await transaction
+                        .update(asset.reference, {'manufacturer': value});
                   },
                 ),
           ),
@@ -102,6 +143,7 @@ class _AssetPageState extends State<AssetPage> {
               );
             },
           ),
+          editButton
         ],
       ),
     );
