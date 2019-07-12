@@ -1,5 +1,9 @@
 ## tracked 
 
-## debug credentials 
-## user:debug@gmail.com
-## pass:debug_me5
+## Debug Credentials 
+## User:debug@gmail.com
+## Password:debug_me5
+
+## Firebase Credentials
+## app.tracked@gmail.com
+## track_me5
