@@ -53,9 +53,8 @@ class _AssetPageState extends State<AssetPage> {
             enabled: editable,
             initialValue: asset.location.toString(),
             decoration: InputDecoration(labelText: 'Location'),
-            validator: (value) =>
-                isNumeric(value) ? null : 'Location must be a number',
-            keyboardType: TextInputType.number,
+            // validator: (value) =>
+            //     isNumeric(value) ? null : 'Location must be a number',
             onSaved: (value) => Firestore.instance.runTransaction(
                   (transaction) async {
                     await transaction.update(asset.reference, {'location': value});
