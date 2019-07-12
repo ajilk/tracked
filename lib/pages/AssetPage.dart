@@ -58,7 +58,7 @@ class _AssetPageState extends State<AssetPage> {
             keyboardType: TextInputType.number,
             onSaved: (value) => Firestore.instance.runTransaction(
                   (transaction) async {
-                    await transaction.update(asset.reference, {'location': int.parse(value)});
+                    await transaction.update(asset.reference, {'location': value});
                   },
                 ),
           ),

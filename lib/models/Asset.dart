@@ -7,7 +7,7 @@ class Asset {
   final String serial;
   final String manufacturer;
   final String model;
-  final int location;
+  final String location;
   final String description;
 
   Asset.fromMap(Map<String, dynamic> asset, {this.reference})
