@@ -202,7 +202,7 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(
-          'tracked',
+          'tracked',textScaleFactor: 2.0,
           style: TextStyle(color: Colors.white70),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
