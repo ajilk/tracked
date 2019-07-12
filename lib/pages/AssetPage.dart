@@ -31,14 +31,22 @@ class _AssetPageState extends State<AssetPage> {
             decoration: InputDecoration(labelText: 'Asset Tag'),
             validator: (value) =>
                 value.isEmpty ? 'Asset tag cannot be empty' : null,
-            onSaved: (value) => print('<saved $value to inventory>'),
+            onSaved: (value) => Firestore.instance.runTransaction(
+                  (transaction) async {
+                    await transaction.update(asset.reference, {'doe': value});
+                  },
+                ),
           ),
           SizedBox(height: 20.0),
           TextFormField(
             enabled: editable,
             initialValue: asset.serial,
             decoration: InputDecoration(labelText: 'Serial Number'),
-            onSaved: (value) => print('<saved $value to inventory>'),
+            onSaved: (value) => Firestore.instance.runTransaction(
+                  (transaction) async {
+                    await transaction.update(asset.reference, {'serial': value});
+                  },
+                ),
           ),
           SizedBox(height: 20.0),
           TextFormField(
@@ -48,21 +56,33 @@ class _AssetPageState extends State<AssetPage> {
             validator: (value) =>
                 isNumeric(value) ? null : 'Location must be a number',
             keyboardType: TextInputType.number,
-            onSaved: (value) => print('<saved $value to inventory>'),
+            onSaved: (value) => Firestore.instance.runTransaction(
+                  (transaction) async {
+                    await transaction.update(asset.reference, {'location': value});
+                  },
+                ),
           ),
           SizedBox(height: 20.0),
           TextFormField(
             enabled: editable,
             initialValue: asset.manufacturer,
             decoration: InputDecoration(labelText: 'Manufacturer'),
-            onSaved: (value) => print('<saved $value to inventory>'),
+            onSaved: (value) => Firestore.instance.runTransaction(
+                  (transaction) async {
+                    await transaction.update(asset.reference, {'manufacturer': value});
+                  },
+                ),
           ),
           SizedBox(height: 20.0),
           TextFormField(
             enabled: editable,
             initialValue: asset.model,
             decoration: InputDecoration(labelText: 'Model'),
-            onSaved: (value) => print('<saved $value to inventory>'),
+            onSaved: (value) => Firestore.instance.runTransaction(
+                  (transaction) async {
+                    await transaction.update(asset.reference, {'model': value});
+                  },
+                ),
           ),
           SizedBox(height: 20.0),
           TextFormField(

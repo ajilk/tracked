@@ -78,11 +78,12 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).accentColor),
+          border: Border.all(color: Theme.of(context).primaryColor),
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: ListTile(
           title: Text(asset.doe),
+          // onLongPress: selectAsset
           onTap: () => Navigator.pushNamed(context, AssetPage.routeName,
               arguments: asset),
         ),
@@ -161,7 +162,9 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
                     scan().then(
                       (value) => setState(() {
                             searchController.text = scanResult;
-                            search(scanResult);
+                            searchController.text.length == 0
+                                ? clearSearch()
+                                : search(scanResult);
                           }),
                     );
                   },
