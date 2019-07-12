@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:core';
 import 'TrackPage.dart';
 
-
 class SigninPage extends StatefulWidget {
   static const routeName = '/';
   @override
@@ -21,32 +20,77 @@ class SigninPageState extends State<SigninPage> {
 
   // bool validateAndSave() => key.currentState.validate() ? true : false;
 
-  Future<void> _signIn() async {
-    final formState = key.currentState;
-    if (formState.validate()) {
-      key.currentState.save();
-      try {
-        FirebaseUser user = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: _email, password: _password);
-        print("Signed In: ${user.uid}");
-        Navigator.pushReplacementNamed(
-          context,
-          TrackPage.routeName,
-          arguments: user,
-        );
-      } catch (e) {
-        print(e);
-      }
-      print("Email: $_email");
-      print("Password: $_password");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     RegExp validEmail = new RegExp(r'^.+\@gmail.com$');
 
     final logo = Text('tracked', style: TextStyle(fontSize: 40));
+
+    Future<void> _signIn() async {
+      final formState = key.currentState;
+      if (formState.validate()) {
+        key.currentState.save();
+        try {
+          FirebaseUser user = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: _email, password: _password);
+          print("Signed In: ${user.uid}");
+          Navigator.pushReplacementNamed(
+            context,
+            TrackPage.routeName,
+            arguments: user,
+          );
+        } catch (e) {
+          switch (e.code) {
+            case 'ERROR_WRONG_PASSWORD':
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    title: new Text("Wrong Password"),
+                    content: new Text(e.message),
+                    actions: <Widget>[
+                      // usually buttons at the bottom of the dialog
+                      new FlatButton(
+                        child: new Text("Close"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              break;
+            case 'ERROR_USER_NOT_FOUND':
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  // return object of type Dialog
+                  return AlertDialog(
+                    title: new Text("User not found"),
+                    content: new Text(e.message),
+                    actions: <Widget>[
+                      // usually buttons at the bottom of the dialog
+                      new FlatButton(
+                        child: new Text("Close"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              break;
+            default:
+              print(e.code);
+          }
+        }
+        print("Email: $_email");
+        print("Password: $_password");
+      }
+    }
 
     final emailField = TextFormField(
       validator: (input) => input.length < 6 || !validEmail.hasMatch(input)
