@@ -20,9 +20,6 @@ class _AssetPageState extends State<AssetPage> {
   final DocumentReference documentReference =
       Firestore.instance.collection("9VfW5pgvlcWbwDbgoBwME6N9wDq1").document("WATEVER");
 
-  
-  TextEditingController tcontroller = TextEditingController();
-
   final _assetFormKey = GlobalKey<FormState>();
   bool editable = false;
   Asset asset;
@@ -30,10 +27,7 @@ class _AssetPageState extends State<AssetPage> {
     documentReference.delete().whenComplete(() {
       print("Deleted Successfully");
       setState(() {});
-      Navigator.pushReplacementNamed(
-            context,
-            TrackPage.routeName,
-          );
+      Navigator.pop(context);
     }).catchError((e) => print(e));
     
     
