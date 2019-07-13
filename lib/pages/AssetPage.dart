@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:validators/validators.dart';
 import '../models/Asset.dart';
+import 'TrackPage.dart';
 
 class AssetPage extends StatefulWidget {
+  
+
   static const routeName = '/assetPage';
   final Asset asset;
   AssetPage({Key key, @required this.asset}) : super(key: key);
@@ -13,13 +16,28 @@ class AssetPage extends StatefulWidget {
 }
 
 class _AssetPageState extends State<AssetPage> {
-  TextEditingController tcontroller = TextEditingController();
+  //TO DO: Find a way to assign an open document to a variable so it can be deleted
+  final DocumentReference documentReference =
+      Firestore.instance.collection("9VfW5pgvlcWbwDbgoBwME6N9wDq1").document("WATEVER");
 
+  
+  TextEditingController tcontroller = TextEditingController();
 
   final _assetFormKey = GlobalKey<FormState>();
   bool editable = false;
   Asset asset;
-
+  void _delete() {
+    documentReference.delete().whenComplete(() {
+      print("Deleted Successfully");
+      setState(() {});
+      Navigator.pushReplacementNamed(
+            context,
+            TrackPage.routeName,
+          );
+    }).catchError((e) => print(e));
+    
+    
+  }
   _AssetPageState(this.asset);
 
   @override
@@ -29,7 +47,7 @@ class _AssetPageState extends State<AssetPage> {
       elevation: 2.0,
       borderRadius: BorderRadius.circular(10.0),
       child: MaterialButton(
-          onPressed: () => print("Obsolete Pressed"),
+          onPressed: () => _delete(),
           minWidth: MediaQuery.of(context).size.width, // matches parent width
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           child: Text(
