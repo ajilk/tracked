@@ -37,12 +37,22 @@ class FadeRoute<T> extends MaterialPageRoute<T> {
       : super(builder: builder, settings: settings);
 
   @override
-  // Widget build(context, animation, secondaryAnimation, child) {}
   Widget buildTransitions(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation, Widget child) {
     if (settings.isInitialRoute) return child;
-    // return child;
     return new FadeTransition(opacity: animation, child: child);
+  }
+}
+
+class InstantRoute<T> extends MaterialPageRoute<T> {
+  InstantRoute({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) return child;
+    return child;
   }
 }
 
@@ -58,21 +68,21 @@ void main() {
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case SigninPage.routeName:
-                return FadeRoute(builder: (context) => new SigninPage());
+                return InstantRoute(builder: (context) => new SigninPage());
                 break;
               case TrackPage.routeName:
-                return FadeRoute(
+                return InstantRoute(
                   builder: (context) => new TrackPage(user: settings.arguments),
                 );
                 break;
               case AssetPage.routeName:
-                return FadeRoute(
+                return InstantRoute(
                   builder: (context) =>
                       new AssetPage(asset: settings.arguments),
                 );
                 break;
               case MenuPage.routeName:
-                return FadeRoute(
+                return InstantRoute(
                   builder: (context) => new MenuPage(user: settings.arguments),
                 );
                 break;
