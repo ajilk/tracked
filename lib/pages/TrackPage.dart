@@ -30,6 +30,7 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     searchController.addListener(setSearchMode);
+    searchController.addListener(search);
     body = _buildBody(
         context, Firestore.instance.collection(user.uid).snapshots());
   }
@@ -44,6 +45,30 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
     searchController.text.length == 0
         ? setState(() => scanMode = true)
         : setState(() => scanMode = false);
+  }
+
+  void search() {
+    RegExp doePattern = new RegExp(r'^D');
+    setState(
+      () {
+        body = _buildBody(
+          context,
+          doePattern.hasMatch(searchController.text.toUpperCase())
+              ? Firestore.instance
+                  .collection(user.uid)
+                  .orderBy('doe')
+                  .startAt([searchController.text.toUpperCase()]).endAt(
+                  [searchController.text.toUpperCase() + "\uf8ff"],
+                ).snapshots()
+              : Firestore.instance
+                  .collection(user.uid)
+                  .orderBy('serial')
+                  .startAt([searchController.text.toUpperCase()]).endAt(
+                  [searchController.text.toUpperCase() + "\uf8ff"],
+                ).snapshots(),
+        );
+      },
+    );
   }
 
   Widget _buildBody(BuildContext context, Stream<QuerySnapshot> stream) {
@@ -111,24 +136,25 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
       }
     }
 
-    void search(String value) {
-      RegExp doePattern = new RegExp(r'^DOE');
-      setState(
-        () {
-          body = _buildBody(
-              context,
-              doePattern.hasMatch(value)
-                  ? Firestore.instance
-                      .collection(user.uid)
-                      .where('doe', isEqualTo: value.toUpperCase())
-                      .snapshots()
-                  : Firestore.instance
-                      .collection(user.uid)
-                      .where('serial', isEqualTo: value.toUpperCase())
-                      .snapshots());
-        },
-      );
-    }
+    // void search(String value) {
+    //   RegExp doePattern = new RegExp(r'^DOE');
+    //   setState(
+    //     () {
+    //       body = _buildBody(
+    //           context,
+    //           doePattern.hasMatch(value.toUpperCase())
+    //               ? Firestore.instance
+    //                   .collection(user.uid)
+    //                   .orderBy('doe')
+    //                   .where('doe', isGreaterThan: value.toUpperCase())
+    //                   .snapshots()
+    //               : Firestore.instance
+    //                   .collection(user.uid)
+    //                   .where('serial', isEqualTo: value.toUpperCase())
+    //                   .snapshots());
+    //     },
+    //   );
+    // }
 
     void clearSearch() {
       searchController.text = '';
@@ -164,14 +190,14 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
                             searchController.text = scanResult;
                             searchController.text.length == 0
                                 ? clearSearch()
-                                : search(scanResult);
+                                : search();
                           }),
                     );
                   },
                 )
               : IconButton(
                   icon: Icon(Icons.search, size: 30.0, color: Colors.white),
-                  onPressed: () => search(searchController.text),
+                  onPressed: search,
                 ),
         ),
       ],
@@ -183,7 +209,7 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
           child: TextField(
             controller: searchController,
             onSubmitted: (value) {
-              value.isEmpty ? clearSearch() : search(value);
+              value.isEmpty ? clearSearch() : search();
             },
             decoration: InputDecoration(
               contentPadding: EdgeInsets.all(15.0),
@@ -202,7 +228,8 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text(
-          'tracked',textScaleFactor: 2.0,
+          'tracked',
+          textScaleFactor: 2.0,
           style: TextStyle(color: Colors.white70),
         ),
         backgroundColor: Theme.of(context).backgroundColor,

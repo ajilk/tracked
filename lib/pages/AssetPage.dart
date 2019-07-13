@@ -15,28 +15,6 @@ class AssetPage extends StatefulWidget {
 class _AssetPageState extends State<AssetPage> {
   TextEditingController tcontroller = TextEditingController();
 
-  createAlertDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(title: Text('Edit'),actions: <Widget>[
-            MaterialButton(
-              elevation: (5.0),
-              child: Text("Archive"),
-              color: Color.fromRGBO(51, 153, 255, 1.0),
-              textColor: Colors.white,
-              onPressed: () => print("Archive pressed"),
-            ),
-            MaterialButton(
-              child: Text("Add"),
-              color: Color.fromRGBO(51, 153, 255, 1.0),
-              textColor: Colors.white,
-              elevation: (5.0),
-              onPressed: () => print("Add Pressed"),
-            ),
-          ]);
-        });
-  }
 
   final _assetFormKey = GlobalKey<FormState>();
   bool editable = false;
@@ -46,16 +24,16 @@ class _AssetPageState extends State<AssetPage> {
 
   @override
   Widget build(BuildContext context) {
-    final editButton = Material(
+    final obsoleteButton = Material(
       color: Color.fromRGBO(51, 153, 255, 1.0), // have MaterialApp track this
       elevation: 2.0,
       borderRadius: BorderRadius.circular(10.0),
       child: MaterialButton(
-          onPressed: () => createAlertDialog(context),
+          onPressed: () => print("Obsolete Pressed"),
           minWidth: MediaQuery.of(context).size.width, // matches parent width
           padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           child: Text(
-            'Edit',
+            'Obsolete',
             textAlign: TextAlign.left,
           )),
     );
@@ -143,7 +121,7 @@ class _AssetPageState extends State<AssetPage> {
               );
             },
           ),
-          editButton
+          obsoleteButton
         ],
       ),
     );
