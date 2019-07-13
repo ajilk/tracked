@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:validators/validators.dart';
@@ -5,8 +6,6 @@ import '../models/Asset.dart';
 import 'TrackPage.dart';
 
 class AssetPage extends StatefulWidget {
-  
-
   static const routeName = '/assetPage';
   final Asset asset;
   AssetPage({Key key, @required this.asset}) : super(key: key);
@@ -16,26 +15,31 @@ class AssetPage extends StatefulWidget {
 }
 
 class _AssetPageState extends State<AssetPage> {
-  //TO DO: Find a way to assign an open document to a variable so it can be deleted
-  final DocumentReference documentReference =
-      Firestore.instance.collection("9VfW5pgvlcWbwDbgoBwME6N9wDq1").document("WATEVER");
 
   final _assetFormKey = GlobalKey<FormState>();
   bool editable = false;
   Asset asset;
-  void _delete() {
-    documentReference.delete().whenComplete(() {
-      print("Deleted Successfully");
-      setState(() {});
-      Navigator.pop(context);
-    }).catchError((e) => print(e));
-    
-    
-  }
+
+  
+
   _AssetPageState(this.asset);
 
   @override
   Widget build(BuildContext context) {
+    void _delete() {
+    final DocumentReference documentReference = Firestore.instance
+      .collection("9VfW5pgvlcWbwDbgoBwME6N9wDq1")
+      .document(asset.reference.documentID);
+    documentReference.delete().whenComplete(() {
+      print("Deleted Successfully");
+      print(asset.reference.documentID); 
+      setState(() {});
+      Navigator.pushReplacementNamed(
+        context,
+        TrackPage.routeName,
+      );
+    }).catchError((e) => print(e));
+  }
     final obsoleteButton = Material(
       color: Color.fromRGBO(51, 153, 255, 1.0), // have MaterialApp track this
       elevation: 2.0,
