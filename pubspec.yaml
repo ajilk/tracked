@@ -25,6 +25,7 @@ dependencies:
   validators: ^2.0.0
   progress_hud_v2: ^2.0.0
   barcode_scan: ^1.0.0
+  firebase_storage: ^3.0.3
 
 
   # The following adds the Cupertino Icons font to your application.
