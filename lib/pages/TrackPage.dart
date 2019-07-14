@@ -204,12 +204,13 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
           onTap: () {
             Firestore.instance.collection(user.uid).add({'doe': ''}).then(
               (reference) {
-                Asset asset = Asset.fromMap({'reference': reference});
-                Navigator.pushNamed(
-                  context,
-                  AssetPage.routeName,
-                  arguments: Arguments(user, asset),
-                );
+                // Asset asset = Asset.fromMap({'reference': reference});
+                // print(reference);
+                // Navigator.pushNamed(
+                //   context,
+                //   AssetPage.routeName,
+                //   arguments: Arguments(user, asset),
+                // );
               },
             );
           },

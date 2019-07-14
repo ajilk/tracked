@@ -53,7 +53,6 @@ class _AssetPageState extends State<AssetPage> {
 
   @override
   Widget build(BuildContext context) {
-    editable = asset.doe == '' ? true : false;
     void _delete() {
       final DocumentReference documentReference = Firestore.instance
           .collection("9VfW5pgvlcWbwDbgoBwME6N9wDq1")
@@ -86,18 +85,20 @@ class _AssetPageState extends State<AssetPage> {
       },
     );
 
-    final obsoleteButton = Material(
-      color: Colors.red,
-      elevation: 2.0,
-      borderRadius: BorderRadius.circular(10.0),
-      child: MaterialButton(
-          onPressed: () => _delete(),
-          minWidth: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          child: Text(
-            'Obsolete',
-            textAlign: TextAlign.left,
-          )),
+    final obsoleteButton = Container(
+      decoration: BoxDecoration(
+        color: Colors.red,
+          border: Border.all(color: Colors.red),
+          borderRadius: BorderRadius.circular(10.0)),
+      width: MediaQuery.of(context).size.width,
+      child: IconButton(
+        color: Colors.white,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent, // makes highlight invisible too
+        onPressed: () => _delete(),
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        icon: Icon(Icons.delete),
+      ),
     );
 
     final assetForm = Form(
