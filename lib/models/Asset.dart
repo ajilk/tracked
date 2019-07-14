@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Defines an Asset
 class Asset {
-  final DocumentReference reference;
-  final String doe;
-  final String serial;
-  final String manufacturer;
-  final String model;
-  final String location;
-  final String description;
+  DocumentReference reference;
+  String doe;
+  String serial;
+  String manufacturer;
+  String model;
+  String location;
+  String description;
 
   Asset.fromMap(Map<String, dynamic> asset, {this.reference})
       : doe = asset['doe'],
@@ -20,6 +20,17 @@ class Asset {
 
   Asset.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
+
+  Map toMap() {
+    var map = Map<String, dynamic>();
+    map['doe'] = doe;
+    map['serial'] = serial;
+    map['manufacturer'] = manufacturer;
+    map['model'] = model;
+    map['location'] = location;
+    map['description'] = description;
+    return map;
+  }
 
   @override
   String toString() {

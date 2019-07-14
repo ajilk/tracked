@@ -6,6 +6,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'AssetPage.dart';
 import 'MenuPage.dart';
 import '../models/Asset.dart';
+import '../models/Arguments.dart';
 
 class TrackPage extends StatefulWidget {
   static const routeName = '/tracked';
@@ -99,7 +100,6 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
     final asset = Asset.fromSnapshot(data);
 
     return Padding(
-      // padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
       padding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       child: Container(
         decoration: BoxDecoration(
@@ -107,10 +107,12 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: ListTile(
-          title: Text(asset.doe),
+          title: Text(
+            asset.doe == null || asset.doe.isEmpty ? 'N/A' : asset.doe,
+          ),
           // onLongPress: selectAsset
           onTap: () => Navigator.pushNamed(context, AssetPage.routeName,
-              arguments: asset),
+              arguments: Arguments(user, asset)),
         ),
       ),
     );
@@ -135,26 +137,6 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
         setState(() => scanResult = "Unknown Error $ex");
       }
     }
-
-    // void search(String value) {
-    //   RegExp doePattern = new RegExp(r'^DOE');
-    //   setState(
-    //     () {
-    //       body = _buildBody(
-    //           context,
-    //           doePattern.hasMatch(value.toUpperCase())
-    //               ? Firestore.instance
-    //                   .collection(user.uid)
-    //                   .orderBy('doe')
-    //                   .where('doe', isGreaterThan: value.toUpperCase())
-    //                   .snapshots()
-    //               : Firestore.instance
-    //                   .collection(user.uid)
-    //                   .where('serial', isEqualTo: value.toUpperCase())
-    //                   .snapshots());
-    //     },
-    //   );
-    // }
 
     void clearSearch() {
       searchController.text = '';
@@ -197,10 +179,42 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
                 )
               : IconButton(
                   icon: Icon(Icons.search, size: 30.0, color: Colors.white),
-                  onPressed: search,
+                  onPressed: () => search,
                 ),
         ),
       ],
+    );
+
+    Widget newAssetButton = Padding(
+      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Theme.of(context).primaryColor),
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: ListTile(
+          title: Center(
+            child: Row(mainAxisSize: MainAxisSize.min, children: [
+              Icon(Icons.add),
+              SizedBox(width: 20),
+              Text('New Asset')
+            ]),
+          ),
+          // onLongPress: selectAsset
+          onTap: () {
+            Firestore.instance.collection(user.uid).add({'doe': ''}).then(
+              (reference) {
+                Asset asset = Asset.fromMap({'reference': reference});
+                Navigator.pushNamed(
+                  context,
+                  AssetPage.routeName,
+                  arguments: Arguments(user, asset),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
 
     final searchField = Row(
@@ -229,20 +243,15 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text(
           'tracked',
-          textScaleFactor: 2.0,
+          textScaleFactor: 1.5,
           style: TextStyle(color: Colors.white70),
         ),
         backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
             icon: Icon(Icons.account_circle),
-            color: Theme.of(context).accentColor,
             onPressed: () {
-              Navigator.pushNamed(
-                context,
-                MenuPage.routeName,
-                arguments: user,
-              );
+              Navigator.pushNamed(context, MenuPage.routeName, arguments: user);
             },
           )
         ],
@@ -252,9 +261,10 @@ class _TrackPageState extends State<TrackPage> with TickerProviderStateMixin {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
+            newAssetButton,
             Expanded(child: body),
             Padding(
-              padding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0),
               child: searchField,
             ),
           ],

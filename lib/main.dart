@@ -7,6 +7,7 @@ import 'pages/SigninPage.dart';
 import 'pages/MenuPage.dart';
 import 'pages/TrackPage.dart';
 import 'theme.dart';
+import 'models/Arguments.dart';
 
 class SlideLeftRoute<T> extends MaterialPageRoute<T> {
   SlideLeftRoute({WidgetBuilder builder, RouteSettings settings})
@@ -76,10 +77,11 @@ void main() {
                 );
                 break;
               case AssetPage.routeName:
-                return InstantRoute(
-                  builder: (context) =>
-                      new AssetPage(asset: settings.arguments),
-                );
+                return InstantRoute(builder: (context) {
+                  Arguments arguments = settings.arguments;
+                  return new AssetPage(
+                      user: arguments.user, asset: arguments.asset);
+                });
                 break;
               case MenuPage.routeName:
                 return InstantRoute(

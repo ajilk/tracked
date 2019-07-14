@@ -20,14 +20,7 @@ class MenuPage extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).backgroundColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Theme.of(context).accentColor,
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: AppBar(backgroundColor: Theme.of(context).backgroundColor),
       backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
