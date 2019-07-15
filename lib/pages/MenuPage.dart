@@ -58,7 +58,8 @@ class MenuPage extends StatelessWidget {
                     alignment: Alignment(-1.1, 0),
                   ),
                   leading: Icon(Icons.help_outline),
-                  onTap: () => print('tapped [help]'),
+                  
+                  onTap: () => launch('mailto:app.tracked@gmail.com?subject=Questions and Concerns!!'),
                 ),
               ],
             ),
@@ -70,7 +71,7 @@ class MenuPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 11.0, decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => launch('mailto:app.tracked@gmail.com?subject=Questions and Concerns!!'),
+                      ..onTap = () => launch('www.google.com'),
                   ),
                 ),
               ),
