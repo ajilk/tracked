@@ -70,7 +70,7 @@ class MenuPage extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 11.0, decoration: TextDecoration.underline),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () => launch('https://google.com'),
+                      ..onTap = () => launch('mailto:app.tracked@gmail.com?subject=Questions and Concerns!!'),
                   ),
                 ),
               ),
