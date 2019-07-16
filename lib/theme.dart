@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 ThemeData buildThemeData() {
   return ThemeData(
+    fontFamily: 'HurmeGeometricSans1',
     brightness: Brightness.dark,
     hintColor: Colors.grey.shade500,
     backgroundColor: Colors.black,
