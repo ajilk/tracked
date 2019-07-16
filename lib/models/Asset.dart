@@ -31,6 +31,7 @@ class Asset {
     map['description'] = description;
     return map;
   }
+  
 
   @override
   String toString() {

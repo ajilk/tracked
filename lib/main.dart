@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tracked/pages/SplashScreen.dart';
 import 'pages/AssetPage.dart';
 import 'pages/SigninPage.dart';
 import 'pages/MenuPage.dart';
@@ -64,8 +65,8 @@ void main() {
         new MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: buildThemeData(),
-          home: SigninPage(),
-          initialRoute: SigninPage.routeName,
+          home: SplashScreen(),
+          initialRoute: SplashScreen.routeName,
           onGenerateRoute: (settings) {
             switch (settings.name) {
               case SigninPage.routeName:

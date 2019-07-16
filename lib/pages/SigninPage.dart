@@ -5,11 +5,12 @@
 */
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tracked/pages/SplashScreen.dart';
 import 'dart:core';
 import 'TrackPage.dart';
 
 class SigninPage extends StatefulWidget {
-  static const routeName = '/';
+  static const routeName = '/SigninPage';
   @override
   SigninPageState createState() => new SigninPageState();
 }
@@ -24,12 +25,13 @@ class SigninPageState extends State<SigninPage> {
   Widget build(BuildContext context) {
     RegExp validEmail = new RegExp(r'^.+\@gmail.com$');
 
-    final logo = Text('tracked', style: TextStyle(fontSize: 40));
+    // final logo = TrackedImage;
 
     Future<void> _signIn() async {
       final formState = key.currentState;
       if (formState.validate()) {
         key.currentState.save();
+        CircularProgressIndicator();
         try {
           FirebaseUser user = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: _email, password: _password);
@@ -91,7 +93,6 @@ class SigninPageState extends State<SigninPage> {
         print("Password: $_password");
       }
     }
-
     final emailField = TextFormField(
       validator: (input) => input.length < 6 || !validEmail.hasMatch(input)
           ? "Invalid Email"
@@ -149,7 +150,7 @@ class SigninPageState extends State<SigninPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                logo,
+                TrackedImage(),
                 SizedBox(height: 40.0),
                 emailField,
                 SizedBox(height: 20.0),
