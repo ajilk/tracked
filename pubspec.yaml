@@ -67,12 +67,12 @@ flutter:
   fonts:
     - family: HurmeGeometricSans1
       fonts:
-        - asset: assets/fonts/HurmeGeometricSans1-Thin.otf
-          weight: 100
-        - asset: assets/fonts/HurmeGeometricSans1-ThinOblique.otf
-          weight: 100
-          style: italic
-        # - asset: assets/fonts/HurmeGeometricSans1.otf
+        # - asset: assets/fonts/HurmeGeometricSans1-Thin.otf
+        #   weight: 100
+        # - asset: assets/fonts/HurmeGeometricSans1-ThinOblique.otf
+        #   weight: 100
+        #   style: italic
+        - asset: assets/fonts/HurmeGeometricSans1.otf
         # - asset: assets/fonts/HurmeGeometricSans1 Black.otf
         # - asset: assets/fonts/HurmeGeometricSans1 BlackOblique.otf
         # - asset: assets/fonts/HurmeGeometricSans1 Bold.otf
