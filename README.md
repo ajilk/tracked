@@ -16,7 +16,7 @@ Track Department of Education assets
 
 - Minimal Dark UI
 - Scan to Search
-- Access to account from any device from anywhere
+- Access to account from any flutter supported device from anywhere
 - (Coming) Filter by specific asset field
 - (Coming) Bulk modification of assets
 - (Coming) Desktop Support
