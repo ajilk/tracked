@@ -2,9 +2,12 @@
 
 Track Department of Education assets
 
-![mockups](./docs/mockups.png)
+|                                 |                                 |                                 |                                 |
+| ------------------------------- | ------------------------------- | ------------------------------- | ------------------------------- |
+| ![ss](./docs/screenshots/1.jpg) | ![ss](./docs/screenshots/2.jpg) | ![ss](./docs/screenshots/4.jpg) | ![ss](./docs/screenshots/5.jpg) |
 
-# Features
+## Features
+
 - Minimal Dark UI
 - Scan to Search
 - Access to account from any device from anywhere
@@ -12,6 +15,7 @@ Track Department of Education assets
 - (Coming) Bulk modification of assets
 - (Coming) Desktop Support
 
-# Technologies 
+## Technologies
+
 - [Flutter](https://flutter.dev)
 - [Firebase](http://firebase.google.com)
