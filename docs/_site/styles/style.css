@@ -9,34 +9,27 @@
 
 #mockup {
   animation-name: fadein;
-  animation-duration: 2s;
+  animation-duration: 3s;
 }
 
-@import "bootstrap/functions";
-@import "bootstrap/variables";
-@import "bootstrap/mixins";
+.navbar-brand {
+  font-size: 2rem !important;
+}
 
+.shadow:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Hide scrollbar */
 html {
-  font-size: 1rem;
-  background-color: black !important;
+  overflow: scroll;
+  overflow-x: hidden;
 }
-
-@include media-breakpoint-up(sm) {
-  html {
-    font-size: 1.1rem;
-  }
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
-
-@include media-breakpoint-up(md) {
-  html {
-    font-size: 1.2rem;
-  }
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
 }
-
-@include media-breakpoint-up(lg) {
-  html {
-    font-size: 1.3rem;
-  }
-}
-
-@import "bootstrap";

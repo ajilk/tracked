@@ -1,0 +1,25 @@
+- name: Azimjon Ilkhomov
+  role: Lead Developer
+  profile: https://www.ajilk.com
+  photo: "./assets/authors/azim.jpg"
+  description:
+    lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    est laborum.
+- name: Temurbek Sabirov
+  role: Designer, Developer
+  profile: https://temurbekk.github.io
+  photo: "./assets/authors/temur.jpg"
+  description:
+    magna aliqua. ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in
+    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+    pariatur. excepteur
+- name: Shahidullah Rahman
+  role: Tester, Developer
+  profile: https://siam132.github.io
+  photo: "./assets/authors/siam.jpeg"
+  description:
+    lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim
+    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    commodo est laborum.

@@ -1,60 +1,61 @@
 ---
 layout: default
+name: home
 ---
 
+{% include githubCorner.html %}
+
 <div class="container-fluid">
-  <h1 class="display-4 pb-5">Tracked</h1>
-  <div id="mockup">
-    <img src="./mockups/2.png" width="100%" />
-  </div>
+  <!-- Mockup -->
+  <img id="mockup" src="./mockups/2.png" width="100%" />
 
   <!-- Description -->
-  <div class="row py-5 justify-content-center">
-    <div class="col-9 bg-secondary" style="height: 450px;">
-      <h1 align="center" class="display-1">Project Descripton</h1>
+  {% for screenshot in site.data.screenshots %}
+  <div class="row px-lg-5 px-sm-2 px-0 py-5 justify-content-center">
+    {% assign direction = forloop.index | modulo: 2 %} {% if direction == 0 %}
+    <div class="col-md-4 col-12">
+      <img src="{{ screenshot.image }}" width="100%" />
     </div>
+    {% endif %}
+    <div class="col-md-8 col-12">
+      <!-- <div class="container-fluid bg-primary" style="height: 100%;"> -->
+      <h1 align="justify">{{ screenshot.description }}</h1>
+      <!-- </div> -->
+    </div>
+    {% if direction != 0 %}
+    <div class="col-md-4 col-12">
+      <img src="{{ screenshot.image }}" width="100%" />
+    </div>
+    {% endif %}
   </div>
+  {% endfor %}
 
-  <!-- Credit  -->
-  <div class="row justify-content-center">
-    <div class="col-md-3 col-4 px-5 text-center">
-      <div>
-        <img src="https://via.placeholder.com/200x300/" width="100%" />
-        <h4 align="center">Author 1</h4>
-        <div class="py-1">
-          <a class="btnLink" href="https://github.com/ajilk">
-            <button type="button" class="btn btn-block btn-outline-dark rounded-0">
-              <i class="fab fa-github"></i>
-            </button>
+  <!-- Author Info -->
+  <div class="row py-2 px-lg-5 px-1 justify-content-center">
+    {% for author in site.data.authors %}
+    <div class="col-lg-4 col-md-12 px-5 px-0 my-3">
+      <!-- Author Photo -->
+      <div class="row">
+        <div class="col-lg-12 col-sm-4 mb-3 px-0 shadow">
+          <a href="{{ author.profile }}">
+            <img src="{{ author.photo }}" width="100%" />
           </a>
         </div>
-        <div class="py-1">
-          <a class="btnLink" href="https://www.linkedin.com/in/ajilk/">
-            <button type="button" class="btn btn-block btn-outline-dark rounded-0">
-              <i class="fab fa-linkedin"></i>
-            </button>
-          </a>
-        </div>
-        <div class="py-1">
-          <a class="btnLink" href="https://instagram.com/azim_jonix/">
-            <button type="button" class="btn btn-block btn-outline-dark rounded-0">
-              <i class="fab fa-instagram"></i>
-            </button>
-          </a>
+        <div class="col-lg-12 col-sm-8">
+          <div class="row mx-sm-4 mx-lg-n3">
+            <!-- Author Name -->
+            <h4>
+              {{ author.name }}
+              <footer class="blockquote-footer">
+                <em>{{ author.role }}</em>
+              </footer>
+            </h4>
+            <!-- Author Description -->
+            <p align="justify">{{ author.description }}</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 col-4 px-5 text-center">
-      <div>
-        <img src="https://via.placeholder.com/200x300/" width="100%" />
-        <h4 align="center">Author 2</h4>
-      </div>
-    </div>
-    <div class="col-md-3 col-4 px-5 text-center">
-      <div>
-        <img src="https://via.placeholder.com/200x300/" width="100%" />
-        <h4 align="center">Author 3</h4>
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
