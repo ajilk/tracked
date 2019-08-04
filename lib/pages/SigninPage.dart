@@ -5,8 +5,7 @@
 */
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tracked/pages/SplashScreen.dart';
-import 'dart:core';
+import '../logo.dart';
 import 'TrackPage.dart';
 
 class SigninPage extends StatefulWidget {
@@ -93,6 +92,7 @@ class SigninPageState extends State<SigninPage> {
         print("Password: $_password");
       }
     }
+
     final emailField = TextFormField(
       validator: (input) => input.length < 6 || !validEmail.hasMatch(input)
           ? "Invalid Email"
@@ -150,7 +150,7 @@ class SigninPageState extends State<SigninPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                TrackedImage(),
+                Logo(),
                 SizedBox(height: 40.0),
                 emailField,
                 SizedBox(height: 20.0),
