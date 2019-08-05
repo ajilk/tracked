@@ -1,2 +1,2 @@
-![tracked.com](https://www.ajilk.com/tracked)
+# [tracked.com](https://www.ajilk.com/tracked)
 # [ in progress ]
