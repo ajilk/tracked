@@ -18,7 +18,7 @@ name: home
     <div class="row px-lg-5 px-sm-2 px-0 py-5 justify-content-center">
       {% assign direction = forloop.index | modulo: 2 %} {% if direction == 0 %}
       <div class="col-md-4 col-12 mb-5 text-center">
-        <img src="{{ mockup.image }}" width="100%" />
+        <img class="p-5 p-md-0" src="{{ mockup.image }}" width="100%" />
       </div>
       <div class="col-md-6 col-12 my-auto">
         <h1 align="left">
@@ -34,7 +34,7 @@ name: home
         <h4 align="right">{{ mockup.description }}</h4>
       </div>
       <div class="col-md-4 col-12 mb-5 text-center order-1">
-        <img src="{{ mockup.image }}" width="100%" />
+        <img class="p-5 p-md-0" src="{{ mockup.image }}" width="100%" />
       </div>
       {% endif %}
     </div>
