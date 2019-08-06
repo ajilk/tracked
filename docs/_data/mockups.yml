@@ -1,0 +1,24 @@
+- image: "./assets/mockups/scan.png"
+  subtitle: "scan"
+  description: 
+    Once you have logged in to your account, searching for the asset you need
+    is easy as scanning the identification tag on the asset.
+
+- image: "./assets/mockups/assetList.png"
+  subtitle: "view"
+  description:
+    Alternatively, you can look up something quickly simply by typing the DOE
+    number onto the search bar to instantly filter out other assets. If the
+    asset is not yet being tracked, you can immediately begin tracking it by
+    tapping the "New Asset" button which will a create brand new asset for
+    you. Then you can simply fill in the necessary information and just like
+    that you are tracking the new asset.
+
+- image: "./assets/mockups/assetDetail.png"
+  subtitle: "modify"
+  description:
+    Once you have found the asset you looking for, you can obtain more
+    information about it on the asset page. Such information include asset's
+    location, manufacturer and other useful data. Make the necessary
+    modification and press save to save it in the cloud which you can access
+    from anywhere on any compatible device

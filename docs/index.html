@@ -7,33 +7,47 @@ name: home
 
 <div class="container-fluid">
   <!-- Mockup -->
-  <img id="mockup" src="./mockups/2.png" width="100%" />
+  <img class="fadein" src="./assets/mockups/cover.png" width="100%" />
 
-  <!-- Description -->
-  {% for screenshot in site.data.screenshots %}
-  <div class="row px-lg-5 px-sm-2 px-0 py-5 justify-content-center">
-    {% assign direction = forloop.index | modulo: 2 %} {% if direction == 0 %}
-    <div class="col-md-4 col-12">
-      <img src="{{ screenshot.image }}" width="100%" />
-    </div>
-    {% endif %}
-    <div class="col-md-8 col-12">
-      <!-- <div class="container-fluid bg-primary" style="height: 100%;"> -->
-      <h1 align="justify">{{ screenshot.description }}</h1>
-      <!-- </div> -->
-    </div>
-    {% if direction != 0 %}
-    <div class="col-md-4 col-12">
-      <img src="{{ screenshot.image }}" width="100%" />
-    </div>
-    {% endif %}
+  <div class="row mt-5 justify-content-center">
+    <h1 class="display-4">Features</h1>
   </div>
-  {% endfor %}
+  <div class="container">
+    <!-- Description -->
+    {% for mockup in site.data.mockups %}
+    <div class="row px-lg-5 px-sm-2 px-0 py-5 justify-content-center">
+      {% assign direction = forloop.index | modulo: 2 %} {% if direction == 0 %}
+      <div class="col-md-4 col-12 mb-5 text-center">
+        <img src="{{ mockup.image }}" width="100%" />
+      </div>
+      <div class="col-md-6 col-12 my-auto">
+        <h1 align="left">
+          <em>{{ mockup.subtitle }}</em>
+        </h1>
+        <h4 align="left">{{ mockup.description }}</h4>
+      </div>
+      {% else %}
+      <div class="col-md-6 col-12 my-auto order-md-1 order-2">
+        <h1 align="right">
+          <em>{{ mockup.subtitle }}</em>
+        </h1>
+        <h4 align="right">{{ mockup.description }}</h4>
+      </div>
+      <div class="col-md-4 col-12 mb-5 text-center order-1">
+        <img src="{{ mockup.image }}" width="100%" />
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
 
+  <div class="row justify-content-center">
+    <h1 class="display-4">The Team</h1>
+  </div>
   <!-- Author Info -->
   <div class="row py-2 px-lg-5 px-1 justify-content-center">
     {% for author in site.data.authors %}
-    <div class="col-lg-4 col-md-12 px-5 px-0 my-3">
+    <div class="col-xl-2 col-lg-3 col-md-12 px-5 px-0 my-3">
       <!-- Author Photo -->
       <div class="row">
         <div class="col-lg-12 col-sm-4 mb-3 px-0 shadow">
@@ -51,7 +65,7 @@ name: home
               </footer>
             </h4>
             <!-- Author Description -->
-            <p align="justify">{{ author.description }}</p>
+            <p>{{ author.description }}</p>
           </div>
         </div>
       </div>

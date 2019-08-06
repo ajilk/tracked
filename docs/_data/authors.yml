@@ -3,23 +3,21 @@
   profile: https://www.ajilk.com
   photo: "./assets/authors/azim.jpg"
   description:
-    lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    est laborum.
+    Developed the main codebase and structure based on the provided design
+    and specification. 
+
 - name: Temurbek Sabirov
   role: Designer, Developer
   profile: https://temurbekk.github.io
   photo: "./assets/authors/temur.jpg"
   description:
-    magna aliqua. ut enim ad minim veniam, quis nostrud exercitation ullamco
-    laboris nisi ut aliquip ex ea commodo consequat. duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-    pariatur. excepteur
+    Wireframed and designed the user interface following the guidelines
+    provided by <a href="https://material.io/design/">Material Design</a>.
+
 - name: Shahidullah Rahman
   role: Tester, Developer
   profile: https://siam132.github.io
   photo: "./assets/authors/siam.jpeg"
   description:
-    lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. ut enim ad minim
-    veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-    commodo est laborum.
+    Continuously conducted rigorous tests on the product and provided
+    feedback on improvements and enhancements that can be made.

@@ -7,7 +7,7 @@
   }
 }
 
-#mockup {
+.fadein {
   animation-name: fadein;
   animation-duration: 3s;
 }
@@ -17,7 +17,7 @@
 }
 
 .shadow:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3) !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Hide scrollbar */
